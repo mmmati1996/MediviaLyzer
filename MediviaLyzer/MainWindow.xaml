@@ -4,19 +4,78 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediviaLyzer"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Height="550" Width="900" WindowStyle="None">
+        Height="550" Width="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:MainWindowModelView/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Background="#FFEAE5F7">
+            <Image Source="Images\MediviaLyzer_Logo.png" Margin="3,3,3,3" />
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" Background="#FFEAE5F7">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFC0BBCE"/>
+            </Grid.Effect>
+            <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="3" HorizontalAlignment="Right">
+                <StackPanel Width="150">
+                    <Button Content="Account"/>
+                    <Button Content="Help"/>
+                    <Separator/>
+                    <Button Content="Close" Command="{Binding CloseWindow}"/>
+                </StackPanel>
+            </materialDesign:PopupBox>
+            <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22">Logged as: </TextBlock>
+        </Grid>
+        <ListView x:Name="MainMenu" Grid.Row="1" Grid.Column="0" Background="#FFEAE5F7">
+            <ListViewItem x:Name="HomeTab" Height="60">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="MouseDown">
+                        <ie:InvokeCommandAction Command="{Binding SwitchHomeTab}"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ViewDashboard" Height="25" Width="25" Margin="10"/>
+                    <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10"/>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="HUDsTab" Height="60">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ViewCarousel" Height="25" Width="25" Margin="10"/>
+                    <TextBlock Text="HUDs" VerticalAlignment="Center" Margin="20 10"/>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="DatabaseTab" Height="60">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Database" Height="25" Width="25" Margin="10"/>
+                    <TextBlock Text="Database" VerticalAlignment="Center" Margin="20 10"/>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="SettingsTab" Height="60">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Settings" Height="25" Width="25" Margin="10"/>
+                    <TextBlock Text="Settings" VerticalAlignment="Center" Margin="20 10"/>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="AboutTab" Height="60">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="About" Height="25" Width="25" Margin="10"/>
+                    <TextBlock Text="About" VerticalAlignment="Center" Margin="20 10"/>
+                </StackPanel>
+            </ListViewItem>
+        </ListView>
+        <Frame x:Name="TabsContent" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

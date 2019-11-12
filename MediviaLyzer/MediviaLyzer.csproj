@@ -7,14 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignColors" Version="1.2.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="2.6.0" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1367" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="HUDs\Models\" />
     <Folder Include="Tabs\Models\" />
     <Folder Include="Tabs\ViewModels\" />
     <Folder Include="Tabs\Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\MediviaLyzer_Logo.png" />
   </ItemGroup>
 
 </Project>
