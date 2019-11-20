@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="HUDs\Models\" />
     <Folder Include="Tabs\Models\" />
     <Folder Include="Tabs\ViewModels\" />
     <Folder Include="Tabs\Views\" />

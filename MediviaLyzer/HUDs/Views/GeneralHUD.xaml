@@ -4,11 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
+        xmlns:viewmodels="clr-namespace:MediviaLyzer.HUDs.ViewModels"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-       Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None">
+       Height="500" Width="400" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True">
+    <Window.DataContext>
+        <viewmodels:GeneralHUDModelView/>
+    </Window.DataContext>
+    <Window.Background>
+        <SolidColorBrush Color="White" Opacity="{Binding OpacityWindow}"/>
+    </Window.Background>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Path=HUDName}" HorizontalAlignment="Stretch" Margin="5,5,5,5" VerticalAlignment="Top"/>
     </Grid>
 </Window>

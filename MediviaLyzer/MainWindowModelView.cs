@@ -23,7 +23,9 @@ namespace MediviaLyzer
 
         private void HomeTab()
         {
-            Debug.WriteLine("home");
+            //just for HUD tests
+            var hud = new HUDs.Views.GeneralHUD();
+            hud.Show();
         }
     }
 }

@@ -25,6 +25,9 @@ namespace MediviaLyzer
             InitializeComponent();
         }
 
-
+        private void MoveWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

@@ -25,7 +25,7 @@
         <Grid Grid.Row="0" Grid.Column="0" Background="#FFEAE5F7">
             <Image Source="Images\MediviaLyzer_Logo.png" Margin="3,3,3,3" />
         </Grid>
-        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" Background="#FFEAE5F7">
+        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" Background="#FFEAE5F7" MouseDown="MoveWindow">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFC0BBCE"/>
             </Grid.Effect>
@@ -42,7 +42,7 @@
         <ListView x:Name="MainMenu" Grid.Row="1" Grid.Column="0" Background="#FFEAE5F7">
             <ListViewItem x:Name="HomeTab" Height="60">
                 <ie:Interaction.Triggers>
-                    <ie:EventTrigger EventName="MouseDown">
+                    <ie:EventTrigger EventName="Selected">
                         <ie:InvokeCommandAction Command="{Binding SwitchHomeTab}"/>
                     </ie:EventTrigger>
                 </ie:Interaction.Triggers>
