@@ -27,5 +27,7 @@ namespace MediviaLyzer
             var hud = new HUDs.Views.GeneralHUD();
             hud.Show();
         }
+
+
     }
 }
