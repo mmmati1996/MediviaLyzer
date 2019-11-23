@@ -10,9 +10,6 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Height="550" Width="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize">
-    <Window.DataContext>
-        <local:MainWindowModelView/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -30,7 +27,7 @@
                 <DropShadowEffect BlurRadius="1" ShadowDepth="1" Color="#FFC0BBCE"/>
             </Grid.Effect>
             <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="3" HorizontalAlignment="Right">
-                <StackPanel Width="150">
+                <StackPanel Width="150" Background="AliceBlue">
                     <Button Content="Account"/>
                     <Button Content="Help"/>
                     <Separator/>
@@ -43,7 +40,7 @@
             <ListViewItem x:Name="HomeTab" Height="60">
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="Selected">
-                        <ie:InvokeCommandAction Command="{Binding SwitchHomeTab}"/>
+                        <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="HomePage"/>
                     </ie:EventTrigger>
                 </ie:Interaction.Triggers>
                 <StackPanel Orientation="Horizontal">
@@ -52,6 +49,11 @@
                 </StackPanel>
             </ListViewItem>
             <ListViewItem x:Name="HUDsTab" Height="60">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="Selected">
+                        <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="HUDPage"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="ViewCarousel" Height="25" Width="25" Margin="10"/>
                     <TextBlock Text="HUDs" VerticalAlignment="Center" Margin="20 10"/>
@@ -64,18 +66,30 @@
                 </StackPanel>
             </ListViewItem>
             <ListViewItem x:Name="SettingsTab" Height="60">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="Selected">
+                        <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="SettingsPage"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Settings" Height="25" Width="25" Margin="10"/>
                     <TextBlock Text="Settings" VerticalAlignment="Center" Margin="20 10"/>
                 </StackPanel>
             </ListViewItem>
             <ListViewItem x:Name="AboutTab" Height="60">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="Selected">
+                        <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="AboutPage"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="About" Height="25" Width="25" Margin="10"/>
                     <TextBlock Text="About" VerticalAlignment="Center" Margin="20 10"/>
                 </StackPanel>
             </ListViewItem>
         </ListView>
-        <Frame x:Name="TabsContent" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" Background="#FFF9F9F9">
+            <ContentControl prism:RegionManager.RegionName="PagesRegion"/>
+        </ScrollViewer>
     </Grid>
 </Window>

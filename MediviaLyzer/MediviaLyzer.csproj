@@ -9,14 +9,13 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="1.2.0" />
     <PackageReference Include="MaterialDesignThemes" Version="2.6.0" />
+    <PackageReference Include="Prism.Unity" Version="7.2.0.1367" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1367" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Database\" />
     <Folder Include="Tabs\Models\" />
-    <Folder Include="Tabs\ViewModels\" />
-    <Folder Include="Tabs\Views\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="MediviaLyzer.Tabs.Views.HUDPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MediviaLyzer.Tabs.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <materialDesign:PackIcon Kind="InformationCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="General HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <materialDesign:PackIcon Kind="AttachMoney" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Loot HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <materialDesign:PackIcon Kind="Bed" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Bedmakers HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Future HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Future HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Future HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

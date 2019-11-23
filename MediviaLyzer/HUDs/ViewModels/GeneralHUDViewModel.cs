@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace MediviaLyzer.HUDs.ViewModels
 {
-    class GeneralHUDModelView : INotifyPropertyChanged
+    class GeneralHUDViewModel : INotifyPropertyChanged
     {
         private Models.GeneralHUDModel GeneralHUDModel = new Models.GeneralHUDModel();
         private DispatcherTimer Timer;
@@ -15,7 +15,7 @@ namespace MediviaLyzer.HUDs.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public DelegateCommand ResetClock { get; set; }
 
-        public GeneralHUDModelView()
+        public GeneralHUDViewModel()
         {
             this.Timer = new DispatcherTimer();
             this.Timer.Interval = TimeSpan.FromSeconds(1);
