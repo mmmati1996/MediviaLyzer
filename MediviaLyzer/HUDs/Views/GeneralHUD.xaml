@@ -7,7 +7,7 @@
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Width="170" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="Height">
+        Width="170" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="Height" ShowInTaskbar="False">
     <Window.Background>
         <SolidColorBrush Color="White" Opacity="{Binding OpacityWindow}"/>
     </Window.Background>
@@ -25,7 +25,7 @@
             <Grid.Background>
                 <SolidColorBrush Color="DarkGray" Opacity="{Binding OpacityWindow}"/>
             </Grid.Background>
-            <Label Content="{Binding Path=HUDName}" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="90"/>
+            <Label Content="{Binding HUDName}" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="90"/>
             <Button Content="RESET" HorizontalAlignment="right" Width="85">
                 <Button.Background>
                     <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
