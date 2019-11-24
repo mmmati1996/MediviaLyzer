@@ -1,24 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using CommonServiceLocator;
+using Prism.Ioc;
+using Prism.Unity;
 
 namespace MediviaLyzer
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected override Window CreateShell()
         {
-            base.OnStartup(e);
-
-            var bs = new Bootstrapper();
-            bs.Run();
+            return ServiceLocator.Current.GetInstance<MainWindow>();
+        }
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<Tabs.Views.HomePage>("HomePage");
+            containerRegistry.RegisterForNavigation<Tabs.Views.SettingsPage>("SettingsPage");
+            containerRegistry.RegisterForNavigation<Tabs.Views.AboutPage>("AboutPage");
+            containerRegistry.RegisterForNavigation<Tabs.Views.HUDPage>("HUDPage");
         }
     }
 }
