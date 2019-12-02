@@ -10,6 +10,11 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Height="550" Width="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize">
+    <ie:Interaction.Triggers>
+        <ie:EventTrigger EventName="Loaded">
+            <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="HomePage"/>
+        </ie:EventTrigger>
+    </ie:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -88,7 +93,7 @@
                 </StackPanel>
             </ListViewItem>
         </ListView>
-        <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" Background="#FFF9F9F9">
+        <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#FFF9F9F9">
             <ContentControl prism:RegionManager.RegionName="PagesRegion"/>
         </ScrollViewer>
     </Grid>
