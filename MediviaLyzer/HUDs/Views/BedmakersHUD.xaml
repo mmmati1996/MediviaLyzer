@@ -6,8 +6,13 @@
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="BedmakersHUD" Height="479" Width="362" SizeToContent="WidthAndHeight">
+        Width="170" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="Height" ShowInTaskbar="False">
+    <Window.Background>
+        <SolidColorBrush Color="White" Opacity="{Binding WindowOpacity}"/>
+    </Window.Background>
     <Grid>
-
+        <DataGrid>
+            
+        </DataGrid>
     </Grid>
 </Window>

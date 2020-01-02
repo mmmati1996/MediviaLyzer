@@ -1,12 +1,9 @@
 ﻿using Prism.Commands;
 using Prism.Regions;
+using Prism.Events;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Threading;
@@ -19,21 +16,26 @@ namespace MediviaLyzer.Tabs.ViewModels
         public DelegateCommand AddCharacter { get; set; }
         public DelegateCommand BedmakersStart { get; set; }
         public DelegateCommand BedmakersStop { get; set; }
+        public DelegateCommand DeleteCharacter { get; set; }
 
-        private readonly IRegionManager RegionManager;
-        private ObservableCollection<Models.CharacterModel> ListOfCharacters;
-        private uint AlarmTime;
-        private string _CharacterNameAdd;
+        private readonly IRegionManager _regionManager;
+        private readonly IEventAggregator _ea;
+        private ObservableCollection<Models.CharacterModel> _listOfCharacters;
+        private uint _alarmTime;
+        private string _characterNameAdd;
         private readonly DispatcherTimer BedmakersTimer;
         private readonly DispatcherTimer AlarmTimer;
-        private bool CheckIfPlayAlarm;
-        private bool CheckIfSendEmail;
+        private bool _isBedmakersRunning;
+        private bool _isPlayAlarmChecked;
+        private bool _isSendEmailChecked;
+        private Models.CharacterModel SelectedCharacter;
 
 
-        public BedmakersHUDSettingsViewModel(IRegionManager regionmanager)
+        public BedmakersHUDSettingsViewModel(IRegionManager regionmanager, IEventAggregator ea)
         {
-            this.RegionManager = regionmanager;
-            this.ListOfCharacters = new ObservableCollection<Models.CharacterModel>();
+            this._ea = ea;
+            this._regionManager = regionmanager;
+            this._listOfCharacters = new ObservableCollection<Models.CharacterModel>();
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
             this.AddCharacter = new DelegateCommand(AddCharacterToList);
             this.BedmakersStart = new DelegateCommand(Start);
@@ -44,22 +46,47 @@ namespace MediviaLyzer.Tabs.ViewModels
             this.AlarmTimer = new DispatcherTimer();
             this.AlarmTimer.Interval = new TimeSpan(0, 0, 1);
             this.AlarmTimer.Tick += AlarmTimer_Tick;
+            this.DeleteCharacter = new DelegateCommand(DeleteSelectedCharacter);
+        }
+        public bool IsBedmakersRunning
+        {
+            get { return _isBedmakersRunning; }
+            set
+            {
+                _isBedmakersRunning = value;
+                NotifyPropertyChanged();
+                _ea.GetEvent<Events.IsBedmakerEnabled>().Publish(_isBedmakersRunning);
+            }
         }
         public bool IsPlayAlarmChecked
         {
-            get { return CheckIfPlayAlarm; }
+            get { return _isPlayAlarmChecked; }
             set
             {
-                CheckIfPlayAlarm = value;
+                _isPlayAlarmChecked = value;
                 NotifyPropertyChanged();
             }
         }
         public bool IsSendEmailChecked
         {
-            get { return CheckIfSendEmail; }
+            get { return _isSendEmailChecked; }
             set
             {
-                CheckIfSendEmail = value;
+                _isSendEmailChecked = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private void DeleteSelectedCharacter()
+        {
+            if (SelectedCharacterChanged != null)
+                this.ListOfCharacters.Remove(SelectedCharacterChanged);
+        }
+        public Models.CharacterModel SelectedCharacterChanged
+        {
+            get { return SelectedCharacter; }
+            set
+            {
+                SelectedCharacter = value;
                 NotifyPropertyChanged();
             }
         }
@@ -69,7 +96,7 @@ namespace MediviaLyzer.Tabs.ViewModels
             {
                 foreach (var character in ListOfCharacters)
                 {
-                    if (ConvertTextToMinutes(character.TimeOffline) >= TimeToAlarm)
+                    if (ConvertTextToMinutes(character.TimeOffline) >= AlarmTime)
                     {
                         new Thread(() =>
                         {
@@ -85,24 +112,24 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private void Navigate(string page)
         {
-            RegionManager.RequestNavigate("PagesRegion", page);
+            _regionManager.RequestNavigate("PagesRegion", page);
         }
-        public ObservableCollection<Models.CharacterModel> CharactersList
+        public ObservableCollection<Models.CharacterModel> ListOfCharacters
         {
-            get { return ListOfCharacters; }
+            get { return _listOfCharacters; }
             set
             {
-                if (value == ListOfCharacters)
+                if (value == _listOfCharacters)
                     return;
-                ListOfCharacters = value;
+                _listOfCharacters = value;
                 NotifyPropertyChanged();
             }
         }
         private void AddCharacterToList()
         {
             Others.WebScrapping scrapper = new Others.WebScrapping();
-            if (scrapper.CheckIfCharacterExist(_CharacterNameAdd))
-                this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = _CharacterNameAdd, TimeOffline = "0" });
+            if (scrapper.CheckIfCharacterExist(CharacterNameAdd))
+                this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = CharacterNameAdd, TimeOffline = "0" });
         }
         private void Start()
         {
@@ -118,30 +145,30 @@ namespace MediviaLyzer.Tabs.ViewModels
         private void Refresh()
         {
             Others.WebScrapping scrapper = new Others.WebScrapping();
-            foreach(var character in CharactersList)
+            foreach(var character in ListOfCharacters)
             {
                 character.TimeOffline = scrapper.GetLastLogin(character.CharacterName);
             }
         }
         public string CharacterNameAdd
         {
-            get { return _CharacterNameAdd; }
+            get { return _characterNameAdd; }
             set
             {
-                if (value == _CharacterNameAdd)
+                if (value == _characterNameAdd)
                     return;
-                _CharacterNameAdd = value;
+                _characterNameAdd = value;
                 NotifyPropertyChanged();
             }
         }
-        public uint TimeToAlarm
+        public uint AlarmTime
         {
-            get { return AlarmTime; }
+            get { return _alarmTime; }
             set
             {
-                if (value == AlarmTime)
+                if (value == _alarmTime)
                     return;
-                AlarmTime = value;
+                _alarmTime = value;
                 NotifyPropertyChanged();
             }
         }

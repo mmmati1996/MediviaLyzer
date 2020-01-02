@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:MediviaLyzer.Tabs.Views"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -22,7 +21,7 @@
             <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ToggleButton Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="30">
+        <ToggleButton Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="30" IsChecked="{Binding IsBedmakersRunning}">
             <ie:Interaction.Triggers>
                 <ie:EventTrigger EventName="Checked">
                     <ie:InvokeCommandAction Command="{Binding BedmakersStart}"/>
@@ -42,9 +41,8 @@
         </materialDesign:PackIcon>
         <GroupBox Grid.Row="1" Grid.Column="0" Header="HUD mode">
             <Grid>
-                <RadioButton Content="Single window" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode"/>
-                <RadioButton Content="No window" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode"/>
-                <RadioButton Content="Ingame HUD" VerticalAlignment="Top" Margin="5,55,0,0" GroupName="WindowMode"/>
+                <RadioButton Content="No window" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode" IsChecked="True"/>
+                <RadioButton Content="Ingame HUD" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode" IsEnabled="False"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.Column="1" Header="Add character">
@@ -57,7 +55,7 @@
         <GroupBox Grid.Row="2" Grid.Column="0" Header="Other">
             <Grid>
                 <Label Content="Time to alert: (in minutes)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <TextBox Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="25" Text="{Binding TimeToAlarm}"/>
+                <TextBox Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="25" Text="{Binding AlarmTime}"/>
                 <CheckBox Content="Play alarm if ready" Margin="5,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="{Binding IsPlayAlarmChecked}"/>
                 <CheckBox Content="Send email if ready" Margin="5,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="{Binding IsSendEmailChecked}" IsEnabled="False"/>
             </Grid>
@@ -66,11 +64,11 @@
         </GroupBox>
         <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Header="Characters list">
             <Grid Margin="5,5,5,5">
-                <Button Content="Delete selected" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding CharactersList}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True">
+                <Button Content="Delete selected" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding DeleteCharacter}"/>
+                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectedItem="{Binding SelectedCharacterChanged}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Character name" Binding="{Binding CharacterName}"/>
-                        <DataGridTextColumn Header="OfflineTime" Binding="{Binding TimeOffline}"/>
+                        <DataGridTextColumn Header="Offline time" Binding="{Binding TimeOffline}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

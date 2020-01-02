@@ -7,13 +7,13 @@ namespace MediviaLyzer
 {
     class MainWindowViewModel : BindableBase
     {
-        private readonly IRegionManager RegionManager;
+        private readonly IRegionManager _regionManager;
         public DelegateCommand CloseWindow { get; set; }
         public DelegateCommand<string> NavigateCommand { get; set; }       
 
         public MainWindowViewModel(IRegionManager regionManager)
         {
-            this.RegionManager = regionManager;
+            this._regionManager = regionManager;
             this.CloseWindow = new DelegateCommand(ClosingWindow);
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
         }
@@ -25,7 +25,7 @@ namespace MediviaLyzer
 
         private void Navigate(string page)
         {
-            RegionManager.RequestNavigate("PagesRegion", page);
+            _regionManager.RequestNavigate("PagesRegion", page);
         }
 
 

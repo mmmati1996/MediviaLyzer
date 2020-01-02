@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Width="170" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="Height" ShowInTaskbar="False">
     <Window.Background>
-        <SolidColorBrush Color="White" Opacity="{Binding OpacityWindow}"/>
+        <SolidColorBrush Color="White" Opacity="{Binding WindowOpacity}"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
@@ -23,78 +23,78 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" MouseDown="MoveWindow">
             <Grid.Background>
-                <SolidColorBrush Color="DarkGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="DarkGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
-            <Label Content="{Binding HUDName}" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="90"/>
+            <Label Content="{Binding NameOfHUD}" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Width="90"/>
             <Button Content="RESET" HorizontalAlignment="right" Width="85">
                 <Button.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Button.Background>
             </Button>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.Background>
-                <SolidColorBrush Color="LightGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="LightGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
             <Label Content="Level" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="10" Width="100"/>
             <Label Content="{Binding Level}" HorizontalAlignment="right" Width="75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="10">
                 <Label.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.Background>
-                <SolidColorBrush Color="LightGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="LightGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
             <Label Content="Experience" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="10" Width="100"/>
             <Label Content="{Binding Experience}" HorizontalAlignment="right" Width="75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="10">
                 <Label.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
         </Grid>
         <Grid Grid.Row="3">
             <Grid.Background>
-                <SolidColorBrush Color="LightGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="LightGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
             <Label Content="Experience per hour" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="10" Width="100"/>
             <Label Content="{Binding ExperiencePerHour}" HorizontalAlignment="right" Width="75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="10">
                 <Label.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
         </Grid>
         <Grid Grid.Row="4">
             <Grid.Background>
-                <SolidColorBrush Color="LightGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="LightGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
             <Label Content="Experience gained" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="10" Width="100"/>
             <Label Content="{Binding ExperienceGained}" HorizontalAlignment="right" Width="75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="10">
                 <Label.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
         </Grid>
         <Grid Grid.Row="5">
             <Grid.Background>
-                <SolidColorBrush Color="LightGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="LightGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
             <Label Content="Time to level" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="10" Width="100"/>
             <Label Content="{Binding TimeToLevel}" HorizontalAlignment="right" Width="75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="10">
                 <Label.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
         </Grid>
         <Grid Grid.Row="6">
             <Grid.Background>
-                <SolidColorBrush Color="LightGray" Opacity="{Binding OpacityWindow}"/>
+                <SolidColorBrush Color="LightGray" Opacity="{Binding WindowOpacity}"/>
             </Grid.Background>
             <Label Content="Online time" HorizontalAlignment="Left" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontSize="10" Width="100"/>
             <Label Content="{Binding OnlineTime}" HorizontalAlignment="right" Width="75" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="10">
                 <Label.Background>
-                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding OpacityWindow}"/>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
         </Grid>
