@@ -34,7 +34,7 @@ namespace MediviaLyzer.Others
             }
         }
 
-        public uint GetLastLogin(string charactername)
+        public string GetLastLogin(string charactername)
         {
             try
             {
@@ -42,12 +42,12 @@ namespace MediviaLyzer.Others
                 var headername = doc.DocumentNode.SelectNodes("//div[@class='med-width-100 med-mt-10']").ToList();
                 foreach (var head in headername)
                     if (CheckIfLastLogin_Regex(head.InnerText))
-                        return GetIntFromText(head.InnerText);
-                return 0;
+                        return GetTimeFromText(head.InnerText);
+                return string.Empty;
             }
             catch
             {
-                return 0;
+                return string.Empty;
             }
         }
 
@@ -61,15 +61,15 @@ namespace MediviaLyzer.Others
                 return false;
         }
 
-        private uint GetIntFromText(string text)
+        private string GetTimeFromText(string text) //fe. 16 minutes ago, 2 hours ago, 2 years ago
         {
-            Match match = Regex.Match(text, @"\d+");
+            Match match = Regex.Match(text, @"\d+\s[a-z]*");
             if (match.Success)
             {
-                return Convert.ToUInt32(match.Value);
+                return match.Value;
             }
             else
-                return 0;
+                return string.Empty;
         }
     }
 }

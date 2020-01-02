@@ -7,20 +7,32 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:materialDesignConverters="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="110"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="140" MaxHeight="140"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <ToggleButton Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="30">
+            <ie:Interaction.Triggers>
+                <ie:EventTrigger EventName="Checked">
+                    <ie:InvokeCommandAction Command="{Binding BedmakersStart}"/>
+                </ie:EventTrigger>
+                <ie:EventTrigger EventName="Unchecked">
+                    <ie:InvokeCommandAction Command="{Binding BedmakersStop}"/>
+                </ie:EventTrigger>
+            </ie:Interaction.Triggers>
+        </ToggleButton>
+        <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="50,0,0,0" Text="On/Off"/>
         <materialDesign:PackIcon Grid.Row="0" Grid.Column="0" Kind="ArrowLeftBold" Height="30" Width="30" HorizontalAlignment="Left" VerticalAlignment="Center">
             <ie:Interaction.Triggers>
                 <ie:EventTrigger EventName="MouseDown">
@@ -39,26 +51,23 @@
             <Grid>
                 <Label Content="Character name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
                 <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,30,0,0" Width="300" Text="{Binding CharacterNameAdd}"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,55,0,0" Content="Add" Width="60" Command="{Binding AddCharacter}"/>
+                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,65,0,0" Content="Add" Width="60" Command="{Binding AddCharacter}"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="2" Grid.Column="0" Header="Other">
             <Grid>
                 <Label Content="Time to alert: (in minutes)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"/>
                 <TextBox Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="25" Text="{Binding TimeToAlarm}"/>
-                <CheckBox Content="Play alarm if ready" Margin="5,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <CheckBox Content="Send email if ready" Margin="5,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <CheckBox Content="Play alarm if ready" Margin="5,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="{Binding IsPlayAlarmChecked}"/>
+                <CheckBox Content="Send email if ready" Margin="5,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="{Binding IsSendEmailChecked}" IsEnabled="False"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="3" Grid.Column="0" Header="Settings">
-            <Grid>
-                <Button Content="Test" Command="{Binding RefreshTest}" />
-            </Grid>
         </GroupBox>
         <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Header="Characters list">
             <Grid Margin="5,5,5,5">
                 <Button Content="Delete selected" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <DataGrid Margin="0,30,0,0" ItemsSource="{Binding CharactersList}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True">
+                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding CharactersList}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Character name" Binding="{Binding CharacterName}"/>
                         <DataGridTextColumn Header="OfflineTime" Binding="{Binding TimeOffline}"/>

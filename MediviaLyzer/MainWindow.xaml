@@ -41,7 +41,7 @@
             </materialDesign:PopupBox>
             <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22">Logged as: </TextBlock>
         </Grid>
-        <ListView x:Name="MainMenu" Grid.Row="1" Grid.Column="0" Background="#FFEAE5F7">
+        <ListView x:Name="MainMenu" Grid.Row="1" Grid.Column="0">
             <ListViewItem x:Name="HomeTab" Height="60">
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="Selected">

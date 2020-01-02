@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="BedmakersHUD" Height="450" Width="800" SizeToContent="WidthAndHeight">
+        Title="BedmakersHUD" Height="479" Width="362" SizeToContent="WidthAndHeight">
     <Grid>
-        
+
     </Grid>
 </Window>
