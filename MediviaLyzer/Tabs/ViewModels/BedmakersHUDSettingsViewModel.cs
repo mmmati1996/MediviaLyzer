@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 
 namespace MediviaLyzer.Tabs.ViewModels
@@ -13,11 +14,13 @@ namespace MediviaLyzer.Tabs.ViewModels
         public DelegateCommand<string> NavigateCommand { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public DelegateCommand AddCharacter { get; set; }
+        public DelegateCommand RefreshTest { get; set; }
 
         private readonly IRegionManager RegionManager;
         private uint AlarmTime;
         private ObservableCollection<Models.CharacterModel> ListOfCharacters;
-        private string _CharacterName;
+        private string _CharacterNameAdd;
+
 
         public BedmakersHUDSettingsViewModel(IRegionManager regionmanager)
         {
@@ -25,6 +28,7 @@ namespace MediviaLyzer.Tabs.ViewModels
             this.ListOfCharacters = new ObservableCollection<Models.CharacterModel>();
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
             this.AddCharacter = new DelegateCommand(AddCharacterToList);
+            this.RefreshTest = new DelegateCommand(Refresh);
         }
         private void Navigate(string page)
         {
@@ -41,19 +45,34 @@ namespace MediviaLyzer.Tabs.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs("CharactersList"));
             }
         }
-        private void AddCharacterToList ()
+        private void AddCharacterToList()
         {
-            this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = _CharacterName, TimeOffline = 0 });
+            Others.WebScrapping web = new Others.WebScrapping();
+            Debug.WriteLine(web.CheckIfCharacterExist(_CharacterNameAdd));
+            this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = _CharacterNameAdd, TimeOffline = 0 });
         }
-        public string CharacterName
+
+        private void Refresh()
         {
-            get { return _CharacterName; }
+            Others.WebScrapping scrapper = new Others.WebScrapping();
+            foreach(var character in CharactersList)
+            {
+                character.TimeOffline = scrapper.GetLastLogin(character.CharacterName);
+                PropertyChanged(this, new PropertyChangedEventArgs("CharactersList"));
+            }
+        }
+
+
+        //adding character
+        public string CharacterNameAdd
+        {
+            get { return _CharacterNameAdd; }
             set
             {
-                if (value == _CharacterName)
+                if (value == _CharacterNameAdd)
                     return;
-                _CharacterName = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("CharacterName"));
+                _CharacterNameAdd = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("CharacterNameAdd"));
             }
         }
         public uint TimeToAlarm

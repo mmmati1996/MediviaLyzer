@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="110"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -37,7 +38,7 @@
         <GroupBox Grid.Row="1" Grid.Column="1" Header="Add character">
             <Grid>
                 <Label Content="Character name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
-                <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,30,0,0" Width="300" Text="{Binding CharacterName}"/>
+                <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,30,0,0" Width="300" Text="{Binding CharacterNameAdd}"/>
                 <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,55,0,0" Content="Add" Width="60" Command="{Binding AddCharacter}"/>
             </Grid>
         </GroupBox>
@@ -49,10 +50,15 @@
                 <CheckBox Content="Send email if ready" Margin="5,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="2" Grid.Column="1" Header="Characters list">
+        <GroupBox Grid.Row="3" Grid.Column="0" Header="Settings">
+            <Grid>
+                <Button Content="Test" Command="{Binding RefreshTest}" />
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Header="Characters list">
             <Grid Margin="5,5,5,5">
                 <Button Content="Delete selected" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <DataGrid Margin="0,30,0,0" ItemsSource="{Binding CharactersList}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single">
+                <DataGrid Margin="0,30,0,0" ItemsSource="{Binding CharactersList}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Character name" Binding="{Binding CharacterName}"/>
                         <DataGridTextColumn Header="OfflineTime" Binding="{Binding TimeOffline}"/>
