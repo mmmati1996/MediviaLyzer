@@ -34,6 +34,7 @@
             <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" StaysOpen="False" Margin="3" HorizontalAlignment="Right">
                 <StackPanel Width="150" Background="AliceBlue">
                     <Button Content="Account"/>
+                    <Button Content="Inject client" Command="{Binding OpenProcessPickerDialog}"/>
                     <Button Content="Help"/>
                     <Separator/>
                     <Button Content="Close" Command="{Binding CloseWindow}"/>
