@@ -3,12 +3,15 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Prism.Events;
+using Prism.Services.Dialogs;
+using Prism.Commands;
 
 namespace MediviaLyzer.HUDs.ViewModels
 {
     class BedmakersHUDViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public Action CloseAction { get; internal set; }
 
         private readonly IEventAggregator _ea;
         private double _windowOpacity = 0.5;
@@ -18,9 +21,9 @@ namespace MediviaLyzer.HUDs.ViewModels
         {
             this._ea = ea;
             this._listOfCharacters = new ObservableCollection<Models.CharacterModel>();
-            _ea.GetEvent<Tabs.Events.ListOfBedmakers>().Subscribe(ListOfCharacters_Subscribe);
+            _ea.GetEvent<Events.ListOfBedmakers>().Subscribe(ListOfCharacters_Subscribe);
+            _ea.GetEvent<Events.IsBedmakerEnabled>().Subscribe(BedmakersStatus_Subscribe);
         }
-
         public ObservableCollection<Models.CharacterModel> ListOfCharacters
         {
             get { return _listOfCharacters; }
@@ -30,10 +33,6 @@ namespace MediviaLyzer.HUDs.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private void ListOfCharacters_Subscribe(ObservableCollection<Models.CharacterModel> list)
-        {
-            this._listOfCharacters = list;
-        }
         public double WindowOpacity
         {
             get { return _windowOpacity; }
@@ -42,6 +41,20 @@ namespace MediviaLyzer.HUDs.ViewModels
                 _windowOpacity = value;
                 NotifyPropertyChanged();
             }
+        }
+
+        private void ListOfCharacters_Subscribe(ObservableCollection<Models.CharacterModel> list)
+        {
+            this.ListOfCharacters = list;
+        }
+        private void BedmakersStatus_Subscribe(bool status)
+        {
+            if (status == false)
+                CloseWindow();
+        }
+        private void CloseWindow()
+        {
+            CloseAction();
         }
         protected void NotifyPropertyChanged([CallerMemberName] string name = null)
         {

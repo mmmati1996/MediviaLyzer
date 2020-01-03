@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Threading;
+using Prism.Ioc;
 
 namespace MediviaLyzer.Tabs.ViewModels
 {
@@ -20,6 +21,7 @@ namespace MediviaLyzer.Tabs.ViewModels
 
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _ea;
+        private readonly IContainerExtension _container;
         private ObservableCollection<Models.CharacterModel> _listOfCharacters;
         private uint _alarmTime;
         private string _characterNameAdd;
@@ -31,10 +33,11 @@ namespace MediviaLyzer.Tabs.ViewModels
         private Models.CharacterModel SelectedCharacter;
 
 
-        public BedmakersHUDSettingsViewModel(IRegionManager regionmanager, IEventAggregator ea)
+        public BedmakersHUDSettingsViewModel(IRegionManager regionmanager, IEventAggregator ea, IContainerExtension container)
         {
             this._ea = ea;
             this._regionManager = regionmanager;
+            this._container = container;
             this._listOfCharacters = new ObservableCollection<Models.CharacterModel>();
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
             this.AddCharacter = new DelegateCommand(AddCharacterToList);
@@ -79,7 +82,10 @@ namespace MediviaLyzer.Tabs.ViewModels
         private void DeleteSelectedCharacter()
         {
             if (SelectedCharacterChanged != null)
+            {
                 this.ListOfCharacters.Remove(SelectedCharacterChanged);
+                _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
+            }
         }
         public Models.CharacterModel SelectedCharacterChanged
         {
@@ -129,13 +135,18 @@ namespace MediviaLyzer.Tabs.ViewModels
         {
             Others.WebScrapping scrapper = new Others.WebScrapping();
             if (scrapper.CheckIfCharacterExist(CharacterNameAdd))
+            {
                 this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = CharacterNameAdd, TimeOffline = "0" });
+                _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
+            }
         }
         private void Start()
         {
             Refresh();
             BedmakersTimer.Start();
             AlarmTimer.Start();
+            _container.Resolve<HUDs.Views.BedmakersHUD>().Show();
+            _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
         }
         private void Stop()
         {

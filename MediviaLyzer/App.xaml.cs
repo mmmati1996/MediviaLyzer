@@ -12,7 +12,7 @@ namespace MediviaLyzer
     {
         protected override Window CreateShell()
         {
-            return ServiceLocator.Current.GetInstance<MainWindow>();
+            return Container.Resolve<MainWindow>();
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {

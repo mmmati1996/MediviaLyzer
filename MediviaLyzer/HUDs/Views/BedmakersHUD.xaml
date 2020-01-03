@@ -6,13 +6,23 @@
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Width="170" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="Height" ShowInTaskbar="False">
+        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" ShowInTaskbar="False">
     <Window.Background>
         <SolidColorBrush Color="White" Opacity="{Binding WindowOpacity}"/>
     </Window.Background>
-    <Grid>
-        <DataGrid>
-            
-        </DataGrid>
+    <Grid MouseDown="MoveWindow">
+        <StackPanel>
+            <Label Content="Bedmakers HUD" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <Label.Background>
+                    <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
+                </Label.Background>
+            </Label>
+            <DataGrid ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" HeadersVisibility="None" Background="{x:Null}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Character name" Binding="{Binding CharacterName}"/>
+                    <DataGridTextColumn Header="Offline time" Binding="{Binding TimeOffline}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Window>
