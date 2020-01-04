@@ -70,19 +70,14 @@ namespace MediviaLyzer.HUDs.ViewModels
         {
             if (status == true)
             {
-                if(!IsTopMost)
-                {
-                    _ea.GetEvent<Events.ActivateWindow>().Publish();
-                    IsTopMost = true;
-                }
                 //_ea.GetEvent<Events.ActivateWindow>().Publish();
-                //IsTopMost = true;
-                //Visibility = Visibility.Visible;
+                IsTopMost = true;
+                Visibility = Visibility.Visible;
             }
             else
             {
                 IsTopMost = false;
-                //Visibility = Visibility.Collapsed;
+                Visibility = Visibility.Collapsed;
             }
         }
         private void ListOfCharacters_Subscribe(ObservableCollection<Models.CharacterModel> list)

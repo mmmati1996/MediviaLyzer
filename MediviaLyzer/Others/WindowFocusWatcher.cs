@@ -1,25 +1,57 @@
-﻿using System;
+﻿using Prism.Events;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace MediviaLyzer.Others
 {
     class WindowFocusWatcher : IDisposable
     {
         private bool _isWindowVisible;
+        private readonly IEventAggregator _ea;
+        private bool _isRunning = true;
 
+        public WindowFocusWatcher(IEventAggregator ea)
+        {
+            this._ea = ea;
+        }
         public bool IsWindowVisible
         {
             get { return _isWindowVisible; }
             set
             {
-                _isWindowVisible = value;
+                if (_isWindowVisible != value)
+                {
+                    _isWindowVisible = value;
+                    _ea.GetEvent<Events.IsWindowVisible>().Publish(_isWindowVisible);
+                }
             }
         }
-
+        private void UpdateWindowStatus()
+        {
+            if (Others.ConnectedClientVariables._clientInfo != null)
+            {
+                if (Natives.GetForegroundWindow() == Others.ConnectedClientVariables._clientInfo.CHWND)
+                    IsWindowVisible = true;
+                else
+                    IsWindowVisible = false;
+            }
+        }
+        public void Update()
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = false;
+                while (_isRunning)
+                {
+                    UpdateWindowStatus();
+                }
+            }).Start();
+        }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _isRunning = false;
         }
     }
 }
