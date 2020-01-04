@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MediviaLyzer.Others
 {
-    class WindowFocusWatcher
+    class WindowFocusWatcher : IDisposable
     {
         private bool _isWindowVisible;
 
@@ -15,6 +15,11 @@ namespace MediviaLyzer.Others
             {
                 _isWindowVisible = value;
             }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

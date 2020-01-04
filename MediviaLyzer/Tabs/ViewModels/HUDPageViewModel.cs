@@ -22,9 +22,7 @@ namespace MediviaLyzer.Tabs.ViewModels
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
 
             _ea.GetEvent<Events.IsBedmakerEnabled>().Subscribe(BedmakersStatus_Subscribe);
-        }
-
-        
+        } 
         public bool BedmakersHUDStatus
         {
             get { return _bedmakersHUDStatus; }

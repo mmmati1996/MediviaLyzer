@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
 using CommonServiceLocator;
 using Prism.Ioc;
 using Prism.Unity;

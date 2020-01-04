@@ -15,7 +15,7 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="Choose client:" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Margin="0,5,0,0"/>
-        <ListBox Grid.Row="1" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Width="240" Margin="0,5,0,0" HorizontalContentAlignment="Center" ItemsSource="{Binding Processes}">
+        <ListBox Grid.Row="1" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Width="240" Margin="0,5,0,0" HorizontalContentAlignment="Center" ItemsSource="{Binding Processes}" SelectedItem="{Binding SelectedClient}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Pid}"></TextBlock>

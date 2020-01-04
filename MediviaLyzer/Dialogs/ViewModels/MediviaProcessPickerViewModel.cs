@@ -17,6 +17,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
 
         private string _title = "Medivia process picker";
         private ObservableCollection<Models.ClientInjector> _processes;
+        private Models.ClientInjector _selectedClient = null;
 
         public MediviaProcessPickerViewModel()
         {
@@ -25,6 +26,14 @@ namespace MediviaLyzer.Dialogs.ViewModels
             this.RefreshProcesses = new DelegateCommand(RefreshProccessList);
         }
 
+        public Models.ClientInjector SelectedClient
+        {
+            get { return _selectedClient; }
+            set { 
+                _selectedClient = value;
+                NotifyPropertyChanged();
+            }
+        }
         public ObservableCollection<Models.ClientInjector> Processes
         {
             get { return _processes; }
@@ -48,6 +57,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
         }
         private void CloseDialog()
         {
+            Others.ConnectedClientVariables._clientInfo = SelectedClient;
             RaiseRequestClose(null);
         }
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
@@ -68,7 +78,10 @@ namespace MediviaLyzer.Dialogs.ViewModels
             return true;
         }
         public void OnDialogClosed() {}
-        public void OnDialogOpened(IDialogParameters parameters){}
+        public void OnDialogOpened(IDialogParameters parameters)
+        {
+            RefreshProccessList();
+        }
         protected void NotifyPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

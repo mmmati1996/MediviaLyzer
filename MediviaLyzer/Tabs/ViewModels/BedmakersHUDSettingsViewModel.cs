@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Threading;
 using Prism.Ioc;
+using System.Diagnostics;
 
 namespace MediviaLyzer.Tabs.ViewModels
 {

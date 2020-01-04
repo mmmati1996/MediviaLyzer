@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" ShowInTaskbar="False">
+        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" ShowInTaskbar="false" Topmost="{Binding IsTopMost}" Visibility="Visible">
     <Window.Background>
         <SolidColorBrush Color="White" Opacity="{Binding WindowOpacity}"/>
     </Window.Background>
@@ -17,7 +18,10 @@
                     <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
-            <DataGrid ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" HeadersVisibility="None" Background="{x:Null}">
+            <DataGrid ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" HeadersVisibility="None">
+                <DataGrid.Background>
+                    <SolidColorBrush Color="LightBlue" Opacity="{Binding WindowOpacity}"/>
+                </DataGrid.Background>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Character name" Binding="{Binding CharacterName}"/>
                     <DataGridTextColumn Header="Offline time" Binding="{Binding TimeOffline}"/>

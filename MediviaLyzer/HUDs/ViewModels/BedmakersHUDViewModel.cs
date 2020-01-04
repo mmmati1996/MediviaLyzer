@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using Prism.Events;
 using Prism.Services.Dialogs;
 using Prism.Commands;
+using System.Windows;
+using System.Diagnostics;
 
 namespace MediviaLyzer.HUDs.ViewModels
 {
@@ -12,8 +14,11 @@ namespace MediviaLyzer.HUDs.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Action CloseAction { get; internal set; }
+        
 
-        private readonly IEventAggregator _ea;
+        private Visibility _visibility = Visibility.Visible;
+        private bool _isTopMost = true;
+        public readonly IEventAggregator _ea;
         private double _windowOpacity = 0.5;
         private ObservableCollection<Models.CharacterModel> _listOfCharacters;
 
@@ -23,6 +28,25 @@ namespace MediviaLyzer.HUDs.ViewModels
             this._listOfCharacters = new ObservableCollection<Models.CharacterModel>();
             _ea.GetEvent<Events.ListOfBedmakers>().Subscribe(ListOfCharacters_Subscribe);
             _ea.GetEvent<Events.IsBedmakerEnabled>().Subscribe(BedmakersStatus_Subscribe);
+            _ea.GetEvent<Events.IsWindowVisible>().Subscribe(IsWindowVisible_Subscribe);
+        }
+        public Visibility Visibility
+        {
+            get { return _visibility; }
+            set
+            {
+                _visibility = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsTopMost
+        {
+            get { return _isTopMost; }
+            set
+            {
+                _isTopMost = value;
+                NotifyPropertyChanged();
+            }
         }
         public ObservableCollection<Models.CharacterModel> ListOfCharacters
         {
@@ -42,7 +66,25 @@ namespace MediviaLyzer.HUDs.ViewModels
                 NotifyPropertyChanged();
             }
         }
-
+        private void IsWindowVisible_Subscribe(bool status)
+        {
+            if (status == true)
+            {
+                if(!IsTopMost)
+                {
+                    _ea.GetEvent<Events.ActivateWindow>().Publish();
+                    IsTopMost = true;
+                }
+                //_ea.GetEvent<Events.ActivateWindow>().Publish();
+                //IsTopMost = true;
+                //Visibility = Visibility.Visible;
+            }
+            else
+            {
+                IsTopMost = false;
+                //Visibility = Visibility.Collapsed;
+            }
+        }
         private void ListOfCharacters_Subscribe(ObservableCollection<Models.CharacterModel> list)
         {
             this.ListOfCharacters = list;
