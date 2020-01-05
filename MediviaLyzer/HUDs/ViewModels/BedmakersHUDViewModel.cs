@@ -14,13 +14,14 @@ namespace MediviaLyzer.HUDs.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Action CloseAction { get; internal set; }
-        
+        public readonly IEventAggregator _ea;
+        public Func<bool> IsFocused { get; internal set; }
 
         private Visibility _visibility = Visibility.Visible;
         private bool _isTopMost = true;
-        public readonly IEventAggregator _ea;
         private double _windowOpacity = 0.5;
         private ObservableCollection<Models.CharacterModel> _listOfCharacters;
+        private string _hudName = "Bedmakers HUD";
 
         public BedmakersHUDViewModel(IEventAggregator ea)
         {
@@ -29,6 +30,19 @@ namespace MediviaLyzer.HUDs.ViewModels
             _ea.GetEvent<Events.ListOfBedmakers>().Subscribe(ListOfCharacters_Subscribe);
             _ea.GetEvent<Events.IsBedmakerEnabled>().Subscribe(BedmakersStatus_Subscribe);
             _ea.GetEvent<Events.IsWindowVisible>().Subscribe(IsWindowVisible_Subscribe);
+        }
+        private bool IsWindowFocused()
+        {
+            return IsFocused();
+        }
+        public string HudName
+        {
+            get { return _hudName; }
+            set
+            {
+                _hudName = value;
+                NotifyPropertyChanged();
+            }
         }
         public Visibility Visibility
         {
@@ -68,16 +82,21 @@ namespace MediviaLyzer.HUDs.ViewModels
         }
         private void IsWindowVisible_Subscribe(bool status)
         {
-            if (status == true)
+            if (status != IsTopMost)
             {
-                //_ea.GetEvent<Events.ActivateWindow>().Publish();
-                IsTopMost = true;
-                Visibility = Visibility.Visible;
-            }
-            else
-            {
-                IsTopMost = false;
-                Visibility = Visibility.Collapsed;
+                if (status == true)
+                {
+                    IsTopMost = true;
+                    Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    if (!IsWindowFocused())
+                    {
+                        IsTopMost = false;
+                        Visibility = Visibility.Collapsed;
+                    }
+                }
             }
         }
         private void ListOfCharacters_Subscribe(ObservableCollection<Models.CharacterModel> list)

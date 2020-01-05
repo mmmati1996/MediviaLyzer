@@ -41,8 +41,8 @@
         </materialDesign:PackIcon>
         <GroupBox Grid.Row="1" Grid.Column="0" Header="HUD mode">
             <Grid>
-                <RadioButton Content="No window" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode" IsChecked="True"/>
-                <RadioButton Content="Ingame HUD" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode" IsEnabled="False"/>
+                <RadioButton Content="No window" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_NoWindow}"/>
+                <RadioButton Content="Ingame HUD" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_HUD}"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.Column="1" Header="Add character">

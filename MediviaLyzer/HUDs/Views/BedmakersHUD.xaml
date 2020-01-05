@@ -7,18 +7,18 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" ShowInTaskbar="false" Topmost="{Binding IsTopMost}" Visibility="Visible">
+        ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" ShowInTaskbar="false" Topmost="{Binding IsTopMost}" Visibility="{Binding Visibility, Mode=TwoWay}">
     <Window.Background>
         <SolidColorBrush Color="White" Opacity="{Binding WindowOpacity}"/>
     </Window.Background>
-    <Grid MouseDown="MoveWindow">
+    <Grid x:Name="r" MouseDown="MoveWindow">
         <StackPanel>
-            <Label Content="Bedmakers HUD" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <Label Content="{Binding HudName}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                 <Label.Background>
                     <SolidColorBrush Color="DarkBlue" Opacity="{Binding WindowOpacity}"/>
                 </Label.Background>
             </Label>
-            <DataGrid ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" HeadersVisibility="None">
+            <DataGrid ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" HeadersVisibility="None" IsHitTestVisible="False">
                 <DataGrid.Background>
                     <SolidColorBrush Color="LightBlue" Opacity="{Binding WindowOpacity}"/>
                 </DataGrid.Background>

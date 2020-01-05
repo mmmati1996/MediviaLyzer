@@ -1,6 +1,7 @@
 ﻿using Prism.Events;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 
@@ -42,10 +43,11 @@ namespace MediviaLyzer.Others
         {
             new Thread(() =>
             {
-                Thread.CurrentThread.IsBackground = false;
+                Thread.CurrentThread.IsBackground = true;
                 while (_isRunning)
                 {
                     UpdateWindowStatus();
+                    Thread.Sleep(100);
                 }
             }).Start();
         }

@@ -16,21 +16,17 @@ namespace MediviaLyzer.HUDs.Views
             InitializeComponent();
             var w = DataContext as ViewModels.BedmakersHUDViewModel;
             w.CloseAction = new Action(this.Close);
-            w._ea.GetEvent<Events.ActivateWindow>().Subscribe(ActivateWindow);
+            w.IsFocused = new Func<bool>(() => {
+                return this.Dispatcher.Invoke(() =>
+                {
+                    Debug.WriteLine(this.IsMouseOver);
+                    return this.IsMouseOver; }); 
+        });
         }
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
+            this.Visibility = Visibility.Visible;
             this.DragMove();
-        }
-        private void ActivateWindow()
-        {
-            this.Dispatcher.Invoke(() => {
-                Debug.WriteLine(this.Topmost);
-                if (!this.IsActive)
-                {
-                    this.Activate();
-                }
-            });
         }
     }
 }

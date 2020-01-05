@@ -31,6 +31,8 @@ namespace MediviaLyzer.Tabs.ViewModels
         private bool _isBedmakersRunning;
         private bool _isPlayAlarmChecked;
         private bool _isSendEmailChecked;
+        private bool _isWindowHudOptionChecked_NoWindow = true;
+        private bool _isWindowHudOptionChecked_HUD;
         private Models.CharacterModel SelectedCharacter;
 
 
@@ -80,6 +82,24 @@ namespace MediviaLyzer.Tabs.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public bool IsWindowHudOptionChecked_NoWindow
+        {
+            get { return _isWindowHudOptionChecked_NoWindow; }
+            set
+            {
+                _isWindowHudOptionChecked_NoWindow = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsWindowHudOptionChecked_HUD
+        {
+            get { return _isWindowHudOptionChecked_HUD; }
+            set
+            {
+                _isWindowHudOptionChecked_HUD = value;
+                NotifyPropertyChanged();
+            }
+        }
         private void DeleteSelectedCharacter()
         {
             if (SelectedCharacterChanged != null)
@@ -107,7 +127,9 @@ namespace MediviaLyzer.Tabs.ViewModels
                     {
                         new Thread(() =>
                         {
+                            Thread.CurrentThread.IsBackground = true;
                             System.Media.SystemSounds.Beep.Play();
+                            Thread.Sleep(200);
                         }).Start();
                     }
                 }
@@ -146,8 +168,11 @@ namespace MediviaLyzer.Tabs.ViewModels
             Refresh();
             BedmakersTimer.Start();
             AlarmTimer.Start();
-            _container.Resolve<HUDs.Views.BedmakersHUD>().Show();
-            _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
+            if (_isWindowHudOptionChecked_HUD)
+            {
+                _container.Resolve<HUDs.Views.BedmakersHUD>().Show();
+                _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
+            }
         }
         private void Stop()
         {
