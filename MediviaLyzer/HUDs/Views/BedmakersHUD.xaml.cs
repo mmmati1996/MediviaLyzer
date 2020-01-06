@@ -19,7 +19,6 @@ namespace MediviaLyzer.HUDs.Views
             w.IsFocused = new Func<bool>(() => {
                 return this.Dispatcher.Invoke(() =>
                 {
-                    Debug.WriteLine(this.IsMouseOver);
                     return this.IsMouseOver; }); 
         });
         }

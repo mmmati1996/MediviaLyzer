@@ -22,6 +22,7 @@ namespace MediviaLyzer.HUDs.ViewModels
         private double _windowOpacity = 0.5;
         private ObservableCollection<Models.CharacterModel> _listOfCharacters;
         private string _hudName = "Bedmakers HUD";
+        private bool _isclosing = false;
 
         public BedmakersHUDViewModel(IEventAggregator ea)
         {
@@ -82,19 +83,22 @@ namespace MediviaLyzer.HUDs.ViewModels
         }
         private void IsWindowVisible_Subscribe(bool status)
         {
-            if (status != IsTopMost)
+            if (!_isclosing)
             {
-                if (status == true)
+                if (status != IsTopMost)
                 {
-                    IsTopMost = true;
-                    Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    if (!IsWindowFocused())
+                    if (status == true)
                     {
-                        IsTopMost = false;
-                        Visibility = Visibility.Collapsed;
+                        IsTopMost = true;
+                        Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        if (!IsWindowFocused())
+                        {
+                            IsTopMost = false;
+                            Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
             }
@@ -106,7 +110,10 @@ namespace MediviaLyzer.HUDs.ViewModels
         private void BedmakersStatus_Subscribe(bool status)
         {
             if (status == false)
+            {
+                _isclosing = true;
                 CloseWindow();
+            }
         }
         private void CloseWindow()
         {
