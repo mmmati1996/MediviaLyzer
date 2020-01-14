@@ -156,12 +156,18 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private void AddCharacterToList()
         {
-            Others.WebScrapping scrapper = new Others.WebScrapping();
-            if (scrapper.CheckIfCharacterExist(CharacterNameAdd))
+            new Thread(() =>
             {
-                this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = CharacterNameAdd, TimeOffline = "0" });
-                _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
-            }
+                Others.WebScrapping scrapper = new Others.WebScrapping();
+                if (scrapper.CheckIfCharacterExist(CharacterNameAdd))
+                {
+                    Others.DispatcherService.Invoke(() =>
+                    {
+                        this.ListOfCharacters.Add(new Models.CharacterModel { CharacterName = CharacterNameAdd, TimeOffline = "0" });
+                    });
+                    _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
+                }
+            }).Start();
         }
         private void Start()
         {
@@ -181,11 +187,18 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private void Refresh()
         {
-            Others.WebScrapping scrapper = new Others.WebScrapping();
-            foreach(var character in ListOfCharacters)
+            new Thread(() =>
             {
-                character.TimeOffline = scrapper.GetLastLogin(character.CharacterName);
-            }
+                Thread.CurrentThread.IsBackground = true;
+                Others.WebScrapping scrapper = new Others.WebScrapping();
+                foreach(var character in ListOfCharacters)
+                {
+                    Others.DispatcherService.Invoke(() =>
+                    {
+                        character.TimeOffline = scrapper.GetLastLogin(character.CharacterName);
+                    });
+                }
+            }).Start();
         }
         public string CharacterNameAdd
         {

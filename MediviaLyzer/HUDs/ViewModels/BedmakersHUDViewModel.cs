@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace MediviaLyzer.HUDs.ViewModels
 {
-    class BedmakersHUDViewModel : INotifyPropertyChanged
+    class BedmakersHUDViewModel : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Action CloseAction { get; internal set; }
@@ -22,7 +22,6 @@ namespace MediviaLyzer.HUDs.ViewModels
         private double _windowOpacity = 0.5;
         private ObservableCollection<Models.CharacterModel> _listOfCharacters;
         private string _hudName = "Bedmakers HUD";
-        private bool _isclosing = false;
 
         public BedmakersHUDViewModel(IEventAggregator ea)
         {
@@ -83,22 +82,19 @@ namespace MediviaLyzer.HUDs.ViewModels
         }
         private void IsWindowVisible_Subscribe(bool status)
         {
-            if (!_isclosing)
+            if (status != IsTopMost)
             {
-                if (status != IsTopMost)
+                if (status == true)
                 {
-                    if (status == true)
+                    IsTopMost = true;
+                    Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    if (!IsWindowFocused())
                     {
-                        IsTopMost = true;
-                        Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        if (!IsWindowFocused())
-                        {
-                            IsTopMost = false;
-                            Visibility = Visibility.Collapsed;
-                        }
+                        IsTopMost = false;
+                        Visibility = Visibility.Collapsed;
                     }
                 }
             }
@@ -111,7 +107,7 @@ namespace MediviaLyzer.HUDs.ViewModels
         {
             if (status == false)
             {
-                _isclosing = true;
+                Dispose();
                 CloseWindow();
             }
         }
@@ -122,6 +118,13 @@ namespace MediviaLyzer.HUDs.ViewModels
         protected void NotifyPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public void Dispose()
+        {
+            _ea.GetEvent<Events.ListOfBedmakers>().Unsubscribe(ListOfCharacters_Subscribe);
+            _ea.GetEvent<Events.IsBedmakerEnabled>().Unsubscribe(BedmakersStatus_Subscribe);
+            _ea.GetEvent<Events.IsWindowVisible>().Unsubscribe(IsWindowVisible_Subscribe);
         }
     }
 }
