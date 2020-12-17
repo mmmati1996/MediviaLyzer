@@ -19,11 +19,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database\" />
+    <Resource Include="Images\MediviaLyzer_Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\MediviaLyzer_Logo.png" />
+    <Compile Update="Tabs\Views\CooldownHUDSettings.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Tabs\Views\CooldownHUDSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
 </Project>

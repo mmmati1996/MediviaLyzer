@@ -23,6 +23,7 @@ namespace MediviaLyzer
             containerRegistry.RegisterForNavigation<Tabs.Views.SettingsPage>("SettingsPage");
             containerRegistry.RegisterForNavigation<Tabs.Views.AboutPage>("AboutPage");
             containerRegistry.RegisterForNavigation<Tabs.Views.HUDPage>("HUDPage");
+            containerRegistry.RegisterForNavigation<Tabs.Views.DatabasePage>("DatabasePage");
             containerRegistry.RegisterForNavigation<Tabs.Views.BedmakersHUDSettings>("BedmakersSettings");
         }
     }

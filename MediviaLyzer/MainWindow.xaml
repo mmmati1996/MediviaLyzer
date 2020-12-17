@@ -66,6 +66,11 @@
                 </StackPanel>
             </ListViewItem>
             <ListViewItem x:Name="DatabaseTab" Height="60">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="Selected">
+                        <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="DatabasePage"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
                 <StackPanel Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Database" Height="25" Width="25" Margin="10"/>
                     <TextBlock Text="Database" VerticalAlignment="Center" Margin="20 10"/>

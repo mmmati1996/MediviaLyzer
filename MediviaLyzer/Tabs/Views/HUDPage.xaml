@@ -83,8 +83,8 @@
             <Grid>
                 <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
-                    <TextBlock Text="Future HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
+                    <materialDesign:PackIcon Kind="QueryBuilder" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Cooldown" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>
         </Border>
