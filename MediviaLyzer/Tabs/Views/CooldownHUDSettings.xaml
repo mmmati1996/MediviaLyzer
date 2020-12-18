@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MediviaLyzer.Tabs.Views"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+             xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -21,13 +21,13 @@
             <ColumnDefinition Width="240"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ToggleButton Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="30" IsChecked="{Binding IsBedmakersRunning}">
+        <ToggleButton Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="40" Height="30" IsChecked="{Binding IsCooldownRunning}">
             <ie:Interaction.Triggers>
                 <ie:EventTrigger EventName="Checked">
-                    <ie:InvokeCommandAction Command="{Binding BedmakersStart}"/>
+                    <ie:InvokeCommandAction Command="{Binding CooldownStart}"/>
                 </ie:EventTrigger>
                 <ie:EventTrigger EventName="Unchecked">
-                    <ie:InvokeCommandAction Command="{Binding BedmakersStop}"/>
+                    <ie:InvokeCommandAction Command="{Binding CooldownStop}"/>
                 </ie:EventTrigger>
             </ie:Interaction.Triggers>
         </ToggleButton>
@@ -41,33 +41,20 @@
         </materialDesign:PackIcon>
         <GroupBox Grid.Row="1" Grid.Column="0" Header="HUD mode">
             <Grid>
-                <RadioButton Content="No window" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_NoWindow}"/>
-                <RadioButton Content="Ingame HUD" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_HUD}"/>
+                <RadioButton Content="Always display" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_Always}"/>
+                <RadioButton Content="Auto show/hide" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_Auto}"/>
             </Grid>
         </GroupBox>
-        <GroupBox Grid.Row="1" Grid.Column="1" Header="Add character">
-            <Grid>
-                <Label Content="Character name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5,0,0"/>
-                <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,30,0,0" Width="300" Text="{Binding CharacterNameAdd}"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,65,0,0" Content="Add" Width="60" Command="{Binding AddCharacter}"/>
-            </Grid>
+        <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Header="Settings">
         </GroupBox>
-        <GroupBox Grid.Row="2" Grid.Column="0" Header="Other">
-            <Grid>
-                <Label Content="Time to alert: (in minutes)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <TextBox Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Height="25" Text="{Binding AlarmTime}"/>
-                <CheckBox Content="Play alarm if ready" Margin="5,35,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="{Binding IsPlayAlarmChecked}"/>
-                <CheckBox Content="Send email if ready" Margin="5,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="{Binding IsSendEmailChecked}" IsEnabled="False"/>
-            </Grid>
-        </GroupBox>
-        <GroupBox Grid.Row="3" Grid.Column="0" Header="Settings">
-        </GroupBox>
-        <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="1" Header="Characters list">
+        <GroupBox Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Header="Cooldown hotkeys">
             <Grid Margin="5,5,5,5">
-                <Button Content="Delete selected" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding DeleteCharacter}"/>
-                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding ListOfCharacters}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectedItem="{Binding SelectedCharacterChanged}">
+                <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Command="{Binding AddCooldown}"/>
+                <Button Content="Edit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" Command="{Binding EditCooldown}"/>
+                <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,0,0,0" Command="{Binding DeleteCooldown}"/>
+                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding ListOfCooldowns}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectedItem="{Binding SelectedCooldownChanged}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Character name" Binding="{Binding CharacterName}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding CharacterName}"/>
                         <DataGridTextColumn Header="Offline time" Binding="{Binding TimeOffline}"/>
                     </DataGrid.Columns>
                 </DataGrid>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MediviaLyzer.Tabs.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -19,21 +19,22 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="2">
             <Grid>
-                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20" Foreground="Green"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="InformationCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="InformationCircleOutline" Height="70" Width="70" HorizontalAlignment="Center"/>
                     <TextBlock Text="General HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>
         </Border>
         <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="2">
             <Grid>
-                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20" Foreground="Green"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="AttachMoney" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="AttachMoney" Height="70" Width="70" HorizontalAlignment="Center"/>
                     <TextBlock Text="Loot HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>
@@ -57,7 +58,7 @@
                         <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="BedmakersSettings"/>
                     </ie:EventTrigger>
                 </ie:Interaction.Triggers>
-                <Label HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30">
+                <Label HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20">
                     <Label.Style>
                         <Style TargetType="{x:Type Label}">
                             <Style.Triggers>
@@ -74,34 +75,66 @@
                     </Label.Style>
                 </Label>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="Bed" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="Bed" Height="70" Width="70" HorizontalAlignment="Center"/>
                     <TextBlock Text="Bedmakers HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>
         </Border>
         <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="2">
-            <Grid>
-                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+            <Grid Background="Transparent">
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.5"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Opacity" Value="1"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="MouseDown">
+                        <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="CooldownSettings"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20" Foreground="Green">
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding BedmakersHUDStatus}" Value="True">
+                                    <Setter Property="Content" Value="ON"/>
+                                    <Setter Property="Foreground" Value="Green"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding BedmakersHUDStatus}" Value="False">
+                                    <Setter Property="Content" Value="OFF" />
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="QueryBuilder" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="QueryBuilder" Height="70" Width="70" HorizontalAlignment="Center"/>
                     <TextBlock Text="Cooldown" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>
         </Border>
         <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="2">
             <Grid>
-                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20" Foreground="Green"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="70" Width="70" HorizontalAlignment="Center"/>
                     <TextBlock Text="Future HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>
         </Border>
         <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="2">
             <Grid>
-                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" FontSize="30" Foreground="Green"/>
+                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20" Foreground="Green"/>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="110" Width="110" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="QuestionMarkCircleOutline" Height="70" Width="70" HorizontalAlignment="Center"/>
                     <TextBlock Text="Future HUD" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30"/>
                 </StackPanel>
             </Grid>

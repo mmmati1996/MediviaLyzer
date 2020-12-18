@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
-using CommonServiceLocator;
+﻿using System.Windows;
 using Prism.Ioc;
 using Prism.Unity;
 
@@ -25,6 +22,7 @@ namespace MediviaLyzer
             containerRegistry.RegisterForNavigation<Tabs.Views.HUDPage>("HUDPage");
             containerRegistry.RegisterForNavigation<Tabs.Views.DatabasePage>("DatabasePage");
             containerRegistry.RegisterForNavigation<Tabs.Views.BedmakersHUDSettings>("BedmakersSettings");
+            containerRegistry.RegisterForNavigation<Tabs.Views.CooldownHUDSettings>("CooldownSettings");
         }
     }
 }

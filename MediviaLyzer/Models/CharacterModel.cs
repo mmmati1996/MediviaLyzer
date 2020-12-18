@@ -7,9 +7,9 @@ namespace MediviaLyzer.Models
 {
     public class CharacterModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         private string _characterName { get; set; }
         private string _timeOffline { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
         public string CharacterName

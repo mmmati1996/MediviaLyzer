@@ -10,6 +10,7 @@ namespace MediviaLyzer.Tabs.ViewModels
     class HUDPageViewModel : INotifyPropertyChanged
     {
         private bool _bedmakersHUDStatus = false;
+        private bool _cooldownHUDStatus = false;
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _ea;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -22,6 +23,7 @@ namespace MediviaLyzer.Tabs.ViewModels
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
 
             _ea.GetEvent<Events.IsBedmakerEnabled>().Subscribe(BedmakersStatus_Subscribe);
+            _ea.GetEvent<Events.IsCooldownEnabled>().Subscribe(CooldownStatus_Subscribe);
         } 
         public bool BedmakersHUDStatus
         {
@@ -32,9 +34,22 @@ namespace MediviaLyzer.Tabs.ViewModels
                 NotifyPropertyChanged();
             }
         }
+        public bool CooldownHUDStatus
+        {
+            get { return _cooldownHUDStatus; }
+            set
+            {
+                _cooldownHUDStatus = value;
+                NotifyPropertyChanged();
+            }
+        }
         private void BedmakersStatus_Subscribe(bool status)
         {
             BedmakersHUDStatus = status;
+        }
+        private void CooldownStatus_Subscribe(bool status)
+        {
+            CooldownHUDStatus = status;
         }
         private void Navigate(string page)
         {

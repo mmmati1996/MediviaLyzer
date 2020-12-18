@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         prism:ViewModelLocator.AutoWireViewModel="True"
         ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" SizeToContent="WidthAndHeight" ShowInTaskbar="false" Topmost="{Binding IsTopMost}" Visibility="{Binding Visibility, Mode=TwoWay}">
     <Window.Background>

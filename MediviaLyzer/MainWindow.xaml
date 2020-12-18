@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MediviaLyzer"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:ie="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ie="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Height="550" Width="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize">
