@@ -103,11 +103,11 @@
                     <Label.Style>
                         <Style TargetType="{x:Type Label}">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding BedmakersHUDStatus}" Value="True">
+                                <DataTrigger Binding="{Binding CooldownHUDStatus}" Value="True">
                                     <Setter Property="Content" Value="ON"/>
                                     <Setter Property="Foreground" Value="Green"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding BedmakersHUDStatus}" Value="False">
+                                <DataTrigger Binding="{Binding CooldownHUDStatus}" Value="False">
                                     <Setter Property="Content" Value="OFF" />
                                     <Setter Property="Foreground" Value="Red"/>
                                 </DataTrigger>

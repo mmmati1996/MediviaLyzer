@@ -78,7 +78,7 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private void AddNewCooldown()
         {
-            throw new NotImplementedException();
+            _dialogService.ShowDialog("EditAddCooldown", null, null);
         }
         private void EditSelectedCooldown()
         {

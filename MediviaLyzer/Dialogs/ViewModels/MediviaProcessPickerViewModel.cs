@@ -46,11 +46,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
         private void RefreshProccessList()
         {
             Processes.Clear();
-            foreach (Process p in Process.GetProcessesByName("Medivia_OGL"))
-            {
-                Processes.Add(new Models.ClientInjector(p));
-            }
-            foreach (Process p in Process.GetProcessesByName("Medivia_D3D"))
+            foreach (Process p in Process.GetProcessesByName("Medivia"))
             {
                 Processes.Add(new Models.ClientInjector(p));
             }
