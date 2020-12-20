@@ -95,10 +95,11 @@ namespace MediviaLyzer.Models
 
     public enum TextAlignmentTypes
     {
-        Center = 0,
-        Top = 1,
-        Bottom = 2,
-        Left = 3,
-        Right = 4
+        None = 0,
+        Center = 1,
+        Top = 2,
+        Bottom = 3,
+        Left = 4,
+        Right = 5
     }
 }

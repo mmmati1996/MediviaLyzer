@@ -5,17 +5,35 @@ using System.ComponentModel;
 using Prism.Services.Dialogs;
 using System.Diagnostics;
 using Prism.Events;
+using System.Windows.Media.Effects;
+using System.Runtime.CompilerServices;
 
 namespace MediviaLyzer
 {
-    class MainWindowViewModel : BindableBase
+    class MainWindowViewModel : BindableBase, INotifyPropertyChanged
     {
         private readonly IRegionManager _regionManager;
         private readonly IDialogService _dialogService;
+        #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+        public event PropertyChangedEventHandler PropertyChanged;
+        #pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         public DelegateCommand CloseWindow { get; set; }
+        private Effect _windowEffect;
+
         public DelegateCommand OpenProcessPickerDialog { get; set; }
         public DelegateCommand<string> NavigateCommand { get; set; }
         private Others.WindowFocusWatcher _focusWatcher;
+
+        public Effect WindowEffect
+        {
+            get { return _windowEffect; }
+            set
+            {
+                this._windowEffect = value;
+                NotifyPropertyChanged();
+            }
+        }
+
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService, IEventAggregator ea)
         {
@@ -30,7 +48,9 @@ namespace MediviaLyzer
 
         private void OpenProcessPicker()
         {
+            WindowEffect = new BlurEffect();
             _dialogService.ShowDialog("MediviaProcessPicker",null,null);
+            WindowEffect = null;
         }
         private void ClosingWindow()
         {
@@ -41,7 +61,9 @@ namespace MediviaLyzer
         {
             _regionManager.RequestNavigate("PagesRegion", page);
         }
-
-
+        protected void NotifyPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

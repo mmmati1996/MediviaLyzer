@@ -3,26 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:local="clr-namespace:MediviaLyzer.Dialogs.Views"
-             xmlns:prism="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/" xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True"
              >
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="ResizeMode" Value="NoResize"/>
+            <Setter Property="ShowInTaskbar" Value="False"/>
+            <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+            <Setter Property="WindowStyle" Value="None"/>
+        </Style>
+    </prism:Dialog.WindowStyle>
+
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Choose client:" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Margin="0,5,0,0"/>
-        <ListBox Grid.Row="1" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Width="240" Margin="0,5,0,0" HorizontalContentAlignment="Center" ItemsSource="{Binding Processes}" SelectedItem="{Binding SelectedClient}">
+        <Grid Grid.Row="0" Background="#FFEAE5F7" VerticalAlignment="Stretch">
+            <materialDesign:PackIcon Kind="Close" Foreground="Red" Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="MouseDown">
+                        <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
+            </materialDesign:PackIcon>
+        </Grid>
+        <Label Grid.Row="1" Content="Choose client:" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Margin="0,5,0,0"/>
+        <ListBox Grid.Row="2" HorizontalAlignment="Center" Height="auto" VerticalAlignment="Top" Width="240" Margin="0,5,0,0" HorizontalContentAlignment="Center" ItemsSource="{Binding Processes}" SelectedItem="{Binding SelectedClient}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Pid}"></TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="2" Content="Connect" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding CloseDialogCommand}"/>
-        <Button Grid.Row="3" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding RefreshProcesses}"/>
+        <Button Grid.Row="3" Content="Connect" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding CloseDialogCommand}"/>
+        <Button Grid.Row="4" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding RefreshProcesses}"/>
     </Grid>
 </UserControl>

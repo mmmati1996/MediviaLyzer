@@ -9,7 +9,7 @@
         xmlns:ie="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Height="550" Width="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize">
+        Height="550" Width="900" WindowStyle="None" AllowsTransparency="True" ResizeMode="NoResize" Effect="{Binding WindowEffect}">
     <ie:Interaction.Triggers>
         <ie:EventTrigger EventName="Loaded">
             <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="HomePage"/>
