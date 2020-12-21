@@ -99,7 +99,7 @@
                         <ie:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="CooldownSettings"/>
                     </ie:EventTrigger>
                 </ie:Interaction.Triggers>
-                <Label Content="ON" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20" Foreground="Green">
+                <Label HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" FontSize="20">
                     <Label.Style>
                         <Style TargetType="{x:Type Label}">
                             <Style.Triggers>

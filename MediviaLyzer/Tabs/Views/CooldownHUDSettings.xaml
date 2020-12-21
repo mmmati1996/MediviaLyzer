@@ -54,8 +54,9 @@
                 <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,0,0,0" Command="{Binding DeleteCooldown}"/>
                 <DataGrid Margin="0,40,0,0" ItemsSource="{Binding ListOfCooldowns}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectedItem="{Binding SelectedCooldownChanged}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Binding="{Binding CharacterName}"/>
-                        <DataGridTextColumn Header="Offline time" Binding="{Binding TimeOffline}"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Hotkey" Binding="{Binding HotkeyStr}"/>
+                        <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

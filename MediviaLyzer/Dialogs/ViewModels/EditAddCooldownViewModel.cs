@@ -15,7 +15,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
     class EditAddCooldownViewModel : Models.CooldownModel, IDialogAware
     {
         private readonly IDialogService _dialogService;
-        public DelegateCommand CloseDialogCommand { get; set; }
+        public DelegateCommand<string> CloseDialogCommand { get; set; }
         public DelegateCommand<string> PickColorCommand { get; set; }
         public DelegateCommand<KeyEventArgs> HotkeyDownCommand { get; set; }
         public DelegateCommand HotkeyFinishCommand { get; set; }
@@ -29,7 +29,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
 
         public EditAddCooldownViewModel(IDialogService dialogService)
         {
-            this.CloseDialogCommand = new DelegateCommand(CloseDialog);
+            this.CloseDialogCommand = new DelegateCommand<string>(CloseDialog);
             this.PickColorCommand = new DelegateCommand<string>(PickColorWindow);
             this.HotkeyDownCommand = new DelegateCommand<KeyEventArgs>(HotkeyDown);
             this.HotkeyFinishCommand = new DelegateCommand(HotkeyFinish);
@@ -44,9 +44,20 @@ namespace MediviaLyzer.Dialogs.ViewModels
                 NotifyPropertyChanged();
             }
         }
-        private void CloseDialog()
+        private void CloseDialog(string confirm)
         {
-            RaiseRequestClose(null);
+            if (confirm == "true")
+            {
+                DialogParameters parameters = new DialogParameters
+                {
+                    { "cooldown", SelectedCooldown }
+                };
+                RaiseRequestClose(new DialogResult(ButtonResult.OK, parameters));
+            }
+            else
+            {
+                RaiseRequestClose(new DialogResult(ButtonResult.Cancel));
+            }
         }
         private void PickColorWindow(string type)
         {
@@ -79,7 +90,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
         {
             if(!_keys.Contains(keystroke.Key))
                 _keys.Add(keystroke.Key);
-            HotkeyStr = PrintKeyValues();
+            SelectedCooldown.HotkeyStr = PrintKeyValues();
         }
         private void HotkeyFinish()
         {

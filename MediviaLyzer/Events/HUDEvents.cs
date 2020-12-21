@@ -7,4 +7,6 @@ namespace MediviaLyzer.Events
     public class IsCooldownEnabled : PubSubEvent<bool> {}
     public class ListOfBedmakers : PubSubEvent<ObservableCollection<Models.CharacterModel>> {}
     public class ListOfCooldowns : PubSubEvent<ObservableCollection<Models.CooldownModel>> { }
+    public class OnCooldownUpdate : PubSubEvent<Models.CooldownModel> { }
+    public class OnCooldownDelete : PubSubEvent<Models.CooldownModel> { }
 }

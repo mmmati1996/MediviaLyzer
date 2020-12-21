@@ -82,8 +82,20 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Confirm" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Column="1" Content="Cancel" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Grid.Column="0" Content="Confirm" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="Click">
+                        <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}" CommandParameter="true"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
+            </Button>
+            <Button Grid.Column="1" Content="Cancel" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ie:Interaction.Triggers>
+                    <ie:EventTrigger EventName="Click">
+                        <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}" CommandParameter="false"/>
+                    </ie:EventTrigger>
+                </ie:Interaction.Triggers>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

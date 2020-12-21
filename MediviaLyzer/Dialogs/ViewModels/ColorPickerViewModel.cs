@@ -49,20 +49,17 @@ namespace MediviaLyzer.Dialogs.ViewModels
         }
         private void CloseDialog(string Confirm)
         {
-            ButtonResult result = ButtonResult.None;
             if (Confirm == "true")
             {
-                result = ButtonResult.OK;
                 DialogParameters parameters = new DialogParameters
                 {
                     { "color", SelectedColor }
                 };
-                RaiseRequestClose(new DialogResult(result, parameters));
+                RaiseRequestClose(new DialogResult(ButtonResult.OK, parameters));
             }
             else
             {
-                result = ButtonResult.Cancel;
-                RaiseRequestClose(new DialogResult(result));
+                RaiseRequestClose(new DialogResult(ButtonResult.Cancel));
             }
         }
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
@@ -88,10 +85,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
         {
             if(parameters != null)
             {
-                if (parameters.GetValue<Color>("color") == null)
-                    this.SelectedColor = Color.FromRgb(0,255,255);
-                else
-                    this.SelectedColor = parameters.GetValue<Color>("color");
+                this.SelectedColor = parameters.GetValue<Color>("color");
             }
         }
         protected void NotifyPropertyChanged([CallerMemberName] string name = null)

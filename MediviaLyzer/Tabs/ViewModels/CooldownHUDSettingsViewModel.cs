@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using Prism.Ioc;
 using System.Diagnostics;
 using Prism.Services.Dialogs;
+using System.Linq;
 
 namespace MediviaLyzer.Tabs.ViewModels
 {
@@ -55,7 +56,7 @@ namespace MediviaLyzer.Tabs.ViewModels
             {
                 _isCooldownRunning = value;
                 NotifyPropertyChanged();
-                _ea.GetEvent<Events.IsBedmakerEnabled>().Publish(_isCooldownRunning);
+                _ea.GetEvent<Events.IsCooldownEnabled>().Publish(_isCooldownRunning);
             }
         }
         public bool IsWindowHudOptionChecked_Always
@@ -78,18 +79,23 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private void AddNewCooldown()
         {
-            _dialogService.ShowDialog("EditAddCooldown", null, null);
+            _dialogService.ShowDialog("EditAddCooldown", null, r => { if (r.Result == ButtonResult.OK) FuncAddCooldown(r.Parameters.GetValue<Models.CooldownModel>("cooldown")); });
         }
         private void EditSelectedCooldown()
         {
-            throw new NotImplementedException();
+            if (SelectedCooldown != null)
+            {
+                _dialogService.ShowDialog("EditAddCooldown", new DialogParameters
+                {
+                    { "cooldown", SelectedCooldown }
+                }, r => { if (r.Result == ButtonResult.OK) FuncEditCooldown((r.Parameters.GetValue<Models.CooldownModel>("cooldown"))); });
+            }
         }
         private void DeleteSelectedCooldown()
         {
             if (SelectedCooldownChanged != null)
             {
-                this.ListOfCooldowns.Remove(SelectedCooldown);
-                _ea.GetEvent<Events.ListOfCooldowns>().Publish(ListOfCooldowns);
+                FuncDeleteCooldown(SelectedCooldown);
             }
         }
         public Models.CooldownModel SelectedCooldownChanged
@@ -115,6 +121,37 @@ namespace MediviaLyzer.Tabs.ViewModels
                 _listOfCooldowns = value;
                 NotifyPropertyChanged();
             }
+        }
+        private void FuncAddCooldown(Models.CooldownModel model)
+        {
+            if (model == null || model?.Id != -1)
+                return;
+            model.Id = FindEmptyId();
+            ListOfCooldowns.Add(model);
+        }
+        private void FuncEditCooldown(Models.CooldownModel model)
+        {
+            if (model == null || SelectedCooldown == null)
+                return;
+            SelectedCooldown = model;
+            _ea.GetEvent<Events.OnCooldownUpdate>().Publish(SelectedCooldown);
+        }
+        private void FuncDeleteCooldown(Models.CooldownModel model)
+        {
+            if (model == null)
+                return;
+            model.Delete();
+            ListOfCooldowns.Remove(model);
+            _ea.GetEvent<Events.OnCooldownDelete>().Publish(model);
+        }
+        private int FindEmptyId()
+        {
+            for (int i = 0; i < int.MaxValue; ++i)
+            {
+                if (ListOfCooldowns.Where(x => x.Id == i).FirstOrDefault() == null)
+                    return i;
+            }
+            throw new Exception("Cannot find unused id (?)");
         }
         private void Start()
         {

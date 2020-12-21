@@ -9,6 +9,7 @@ namespace MediviaLyzer.Models
 {
     public class CooldownModel : Settings
     {
+        private int _Id = -1;
         private string _name;
         private string _hotkeyStr;
         private double _time;
@@ -16,7 +17,17 @@ namespace MediviaLyzer.Models
         private Color _backgroundColor;
         private Color _fontColor;
         private TextAlignmentTypes _textAlignment;
+        public bool ToDelete { get; private set; } = false;
 
+        public int Id
+        {
+            get { return _Id; }
+            set
+            {
+                this._Id = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string Name
         {
             get { return _name; }
@@ -90,6 +101,10 @@ namespace MediviaLyzer.Models
                 this._textAlignment = value;
                 NotifyPropertyChanged();
             }
+        }
+        public void Delete()
+        {
+            this.ToDelete = true;
         }
     }
 
