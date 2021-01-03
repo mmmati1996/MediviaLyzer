@@ -11,7 +11,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
     class MediviaProcessPickerViewModel : IDialogAware, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public DelegateCommand CloseDialogCommand { get; set; }
+        public DelegateCommand<string> CloseDialogCommand { get; set; }
         public DelegateCommand RefreshProcesses { get; set; }
         public event Action<IDialogResult> RequestClose;
 
@@ -22,7 +22,7 @@ namespace MediviaLyzer.Dialogs.ViewModels
         public MediviaProcessPickerViewModel()
         {
             this._processes = new ObservableCollection<Models.ClientInjector>();
-            this.CloseDialogCommand = new DelegateCommand(CloseDialog);
+            this.CloseDialogCommand = new DelegateCommand<string>(CloseDialog);
             this.RefreshProcesses = new DelegateCommand(RefreshProccessList);
         }
 
@@ -51,10 +51,20 @@ namespace MediviaLyzer.Dialogs.ViewModels
                 Processes.Add(new Models.ClientInjector(p));
             }
         }
-        private void CloseDialog()
+        private void CloseDialog(string confirm)
         {
-            Others.ConnectedClientVariables._clientInfo = SelectedClient;
-            RaiseRequestClose(null);
+            if (confirm == "true" && SelectedClient != null)
+            {
+                DialogParameters parameters = new DialogParameters
+                {
+                    { "client", SelectedClient }
+                };
+                RaiseRequestClose(new DialogResult(ButtonResult.OK, parameters));
+            }
+            else
+            {
+                RaiseRequestClose(new DialogResult(ButtonResult.No));
+            }
         }
         public virtual void RaiseRequestClose(IDialogResult dialogResult)
         {

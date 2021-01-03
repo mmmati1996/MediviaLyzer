@@ -11,6 +11,9 @@ using Prism.Ioc;
 using System.Diagnostics;
 using Prism.Services.Dialogs;
 using System.Linq;
+using Unity.Resolution;
+using System.Collections.Generic;
+using MediviaLyzer.Extensions;
 
 namespace MediviaLyzer.Tabs.ViewModels
 {
@@ -146,7 +149,7 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private int FindEmptyId()
         {
-            for (int i = 0; i < int.MaxValue; ++i)
+            for (int i = 64321; i < int.MaxValue; ++i)
             {
                 if (ListOfCooldowns.Where(x => x.Id == i).FirstOrDefault() == null)
                     return i;
@@ -155,11 +158,15 @@ namespace MediviaLyzer.Tabs.ViewModels
         }
         private void Start()
         {
-            //if (_isWindowHudOptionChecked_Always)
-            //{
-            //    _container.Resolve<HUDs.Views.BedmakersHUD>().Show();
-            //    _ea.GetEvent<Events.ListOfBedmakers>().Publish(ListOfCharacters);
-            //}
+            foreach (var elem in ListOfCooldowns)
+            {
+                elem.Hotkeys = elem.HotkeyStr.ConvertToHotkeyModel();
+                _dialogService.Show("CooldownHUD", new DialogParameters
+                {
+                    { "cooldown", elem },
+                    { "visibleAlways", IsWindowHudOptionChecked_Always }
+                }, r => { });
+            }
         }
         private void Stop()
         {

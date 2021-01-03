@@ -30,7 +30,7 @@
             <materialDesign:PackIcon Kind="Close" Foreground="Red" Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="MouseDown">
-                        <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}"/>
+                        <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}" CommandParameter="false"/>
                     </ie:EventTrigger>
                 </ie:Interaction.Triggers>
             </materialDesign:PackIcon>
@@ -43,7 +43,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Row="3" Content="Connect" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding CloseDialogCommand}"/>
+        <Button Grid.Row="3" Content="Connect" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding CloseDialogCommand}" CommandParameter="true"/>
         <Button Grid.Row="4" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="0,5,0,0" Command="{Binding RefreshProcesses}"/>
     </Grid>
 </UserControl>

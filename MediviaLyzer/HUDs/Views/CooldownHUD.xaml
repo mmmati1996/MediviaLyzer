@@ -1,14 +1,32 @@
-﻿<Window x:Class="MediviaLyzer.HUDs.Views.CooldownHUD"
+﻿<UserControl x:Class="MediviaLyzer.HUDs.Views.CooldownHUD"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediviaLyzer.HUDs.Views"
-        mc:Ignorable="d"
-        Title="CooldownHUD" Height="auto" Width="auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" WindowStyle="None" AllowsTransparency="True" ShowInTaskbar="false" Topmost="{Binding IsTopMost}" Visibility="{Binding Visibility, Mode=TwoWay}">
-    <Window.Background>
-        <SolidColorBrush Color="White" Opacity="{Binding WindowOpacity}"/>
-    </Window.Background>
+        xmlns:exten="clr-namespace:MediviaLyzer.Extensions"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        mc:Ignorable="d" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <exten:ColorToBrushConverter x:Key="ColorToBrushConverter" />
+    </UserControl.Resources>
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="Topmost" Value="{Binding IsTopMost}"/>
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="ResizeMode" Value="NoResize"/>
+            <Setter Property="ShowInTaskbar" Value="False"/>
+            <Setter Property="SizeToContent" Value="WidthAndHeight"/>
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Opacity" Value="{Binding WindowOpacity}"/>
+            <Setter Property="Visibility" Value="{Binding Visibility, Mode=TwoWay}"/>
+        </Style>
+    </prism:Dialog.WindowStyle>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,7 +38,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ProgressBar Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="120" Height="10" Opacity="{Binding WindowOpacity}"/>
-        <Label Content="Wild growth" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="4" Opacity="{Binding WindowOpacity}"/>
+        <ProgressBar Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{Binding Model.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" BorderBrush="{Binding Model.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Foreground="{Binding Model.ForegroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Value="{Binding ProgressCurrent}" Maximum="{Binding Model.Time}" Minimum="0" Width="120" Height="10" Opacity="{Binding WindowOpacity}" MouseDown="ProgressBar_MouseDown"/>
+        <Label Content="{Binding LabelText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="{Binding Model.GridRow, Mode=OneWay}" Grid.Column="{Binding Model.GridColumn, Mode=OneWay}" Visibility="{Binding Model.VisibilityText, Mode=OneWay}" FontSize="9" Opacity="{Binding WindowOpacity}" Foreground="{Binding Model.FontColor, Converter={StaticResource ColorToBrushConverter}}" FontStyle="Oblique"/>
     </Grid>
-</Window>
+</UserControl>

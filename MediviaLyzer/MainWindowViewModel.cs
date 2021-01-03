@@ -7,6 +7,7 @@ using System.Diagnostics;
 using Prism.Events;
 using System.Windows.Media.Effects;
 using System.Runtime.CompilerServices;
+using MediviaLyzer.Models;
 
 namespace MediviaLyzer
 {
@@ -14,15 +15,18 @@ namespace MediviaLyzer
     {
         private readonly IRegionManager _regionManager;
         private readonly IDialogService _dialogService;
+        private readonly IEventAggregator _ea;
         #pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public event PropertyChangedEventHandler PropertyChanged;
         #pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+
         public DelegateCommand CloseWindow { get; set; }
         private Effect _windowEffect;
 
         public DelegateCommand OpenProcessPickerDialog { get; set; }
         public DelegateCommand<string> NavigateCommand { get; set; }
         private Others.WindowFocusWatcher _focusWatcher;
+        private ClientInjector Client { get; set; }
 
         public Effect WindowEffect
         {
@@ -38,23 +42,32 @@ namespace MediviaLyzer
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService, IEventAggregator ea)
         {
             this._regionManager = regionManager;
+            this._ea = ea;
             this._dialogService = dialogService;
             this.CloseWindow = new DelegateCommand(ClosingWindow);
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
             this.OpenProcessPickerDialog = new DelegateCommand(OpenProcessPicker);
-            this._focusWatcher = new Others.WindowFocusWatcher(ea);
-            _focusWatcher.Update();
         }
 
         private void OpenProcessPicker()
         {
             WindowEffect = new BlurEffect();
-            _dialogService.ShowDialog("MediviaProcessPicker",null,null);
+            _dialogService.ShowDialog("MediviaProcessPicker",null, r => {
+                if (r.Result == ButtonResult.OK)
+                {
+                    Client = r.Parameters.GetValue<ClientInjector>("client");
+                    if (_focusWatcher != null)
+                        _focusWatcher.Dispose();
+                    _focusWatcher = new Others.WindowFocusWatcher(_ea, Client);
+                    _focusWatcher.Update();
+                }
+            });
             WindowEffect = null;
         }
         private void ClosingWindow()
         {
-            _focusWatcher.Dispose();
+            if(_focusWatcher != null)
+                _focusWatcher.Dispose();
             System.Windows.Application.Current.MainWindow.Close();
         }
         private void Navigate(string page)

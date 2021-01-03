@@ -11,6 +11,7 @@ namespace MediviaLyzer.Models
         private IntPtr _baseAddress;
         private IntPtr _cHWND;
         private int _pid;
+        private Process _process;
 
         public IntPtr cHandle { 
             get { return _cHandle; }
@@ -28,12 +29,18 @@ namespace MediviaLyzer.Models
             get { return _pid; } 
             set { _pid = value; }
         }
+        public Process Process
+        {
+            get { return _process; }
+            set { _process = value; }
+        }
         public ClientInjector(Process proc)
         {
             this._cHandle = proc.Handle;
             this._baseAddress = proc.MainModule.BaseAddress;
             this._cHWND = proc.MainWindowHandle;
             this._pid = proc.Id;
+            this._process = proc;
         }
     }
 }

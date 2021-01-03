@@ -15,9 +15,11 @@ namespace MediviaLyzer
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterDialog<Dialogs.Views.MediviaProcessPicker, Dialogs.ViewModels.MediviaProcessPickerViewModel>();
-            containerRegistry.RegisterDialog<Dialogs.Views.EditAddCooldown, Dialogs.ViewModels.EditAddCooldownViewModel>();
-            containerRegistry.RegisterDialog<Dialogs.Views.ColorPicker, Dialogs.ViewModels.ColorPickerViewModel>();
+            //containerRegistry.RegisterDialogWindow<HUDs.Views.CooldownHUD>("CooldownHUD");
+            containerRegistry.RegisterDialog<Dialogs.Views.MediviaProcessPicker, Dialogs.ViewModels.MediviaProcessPickerViewModel>("MediviaProcessPicker");
+            containerRegistry.RegisterDialog<Dialogs.Views.EditAddCooldown, Dialogs.ViewModels.EditAddCooldownViewModel>("EditAddCooldown");
+            containerRegistry.RegisterDialog<Dialogs.Views.ColorPicker, Dialogs.ViewModels.ColorPickerViewModel>("ColorPicker");
+            containerRegistry.RegisterDialog<HUDs.Views.CooldownHUD, HUDs.ViewModels.CooldownHUDViewModel>("CooldownHUD");
             containerRegistry.RegisterForNavigation<Tabs.Views.HomePage>("HomePage");
             containerRegistry.RegisterForNavigation<Tabs.Views.SettingsPage>("SettingsPage");
             containerRegistry.RegisterForNavigation<Tabs.Views.AboutPage>("AboutPage");
