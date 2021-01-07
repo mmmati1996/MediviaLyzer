@@ -4,9 +4,42 @@ using System.Windows.Media;
 using System.Text;
 using System.Windows;
 using MediviaLyzer.Extensions;
+using System.Collections.ObjectModel;
+using System.Xml.Serialization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MediviaLyzer.Models
 {
+    public class CooldownListModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        private ObservableCollection<CooldownModel> _cooldowns = new ObservableCollection<CooldownModel>();
+        public ObservableCollection<CooldownModel> Cooldowns
+        {
+            get
+            {
+                return _cooldowns;
+            }
+            set
+            {
+                _cooldowns = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public void Save()
+        {
+            Others.XmlService.SerializeToXml(this);
+        }
+        public void Load()
+        {
+            Cooldowns = Others.XmlService.DeserializeXml<CooldownListModel>(nameof(CooldownListModel)).Cooldowns;
+        }
+        protected void NotifyPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+    }
     public class CooldownModel : Settings
     {
         private int _Id = -1;
@@ -20,9 +53,13 @@ namespace MediviaLyzer.Models
         private int _gridColumn = 1;
         private string _hotkeyStr;
         private HotkeyModel _hotkeys;
+        [XmlIgnore]
         private Visibility _visibilityText = Visibility.Collapsed;
+
+        [XmlIgnore]
         public bool ToDelete { get; private set; } = false;
 
+        [XmlIgnore]
         public Visibility VisibilityText
         {
             get
@@ -35,6 +72,7 @@ namespace MediviaLyzer.Models
                 NotifyPropertyChanged();
             }
         }
+        [XmlIgnore]
         public int GridRow
         {
             get
@@ -47,6 +85,7 @@ namespace MediviaLyzer.Models
                 NotifyPropertyChanged();
             }
         }
+        [XmlIgnore]
         public int GridColumn
         {
             get

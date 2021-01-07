@@ -46,13 +46,19 @@
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Header="Settings">
+            <Grid>
+                <StackPanel>
+                    <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="5,5,5,5" Content="Save" Command="{Binding SaveSettings}"/>
+                    <Button VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="5,5,5,5" Content="Load" Command="{Binding LoadSettings}"/>
+                </StackPanel>
+            </Grid>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Header="Cooldown hotkeys">
             <Grid Margin="5,5,5,5">
                 <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,0,0" Command="{Binding AddCooldown}"/>
                 <Button Content="Edit" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100,0,0,0" Command="{Binding EditCooldown}"/>
                 <Button Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,0,0,0" Command="{Binding DeleteCooldown}"/>
-                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding ListOfCooldowns}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectedItem="{Binding SelectedCooldownChanged}">
+                <DataGrid Margin="0,40,0,0" ItemsSource="{Binding Cooldowns.Cooldowns}" AutoGenerateColumns="false" SelectionUnit="FullRow" SelectionMode="Single" IsReadOnly="True" SelectedItem="{Binding SelectedCooldownChanged}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                         <DataGridTextColumn Header="Hotkey" Binding="{Binding HotkeyStr}"/>

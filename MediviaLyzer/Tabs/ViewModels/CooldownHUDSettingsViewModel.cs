@@ -14,42 +14,56 @@ using System.Linq;
 using Unity.Resolution;
 using System.Collections.Generic;
 using MediviaLyzer.Extensions;
+using System.Runtime.CompilerServices;
 
 namespace MediviaLyzer.Tabs.ViewModels
 {
-    class CooldownHUDSettingsViewModel : Models.CooldownModel
+    class CooldownHUDSettingsViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         public DelegateCommand<string> NavigateCommand { get; set; }
         public DelegateCommand AddCooldown { get; set; }
         public DelegateCommand EditCooldown { get; set; }
         public DelegateCommand DeleteCooldown { get; set; }
         public DelegateCommand CooldownStart { get; set; }
         public DelegateCommand CooldownStop { get; set; }
+        public DelegateCommand SaveSettings { get; set; }
+        public DelegateCommand LoadSettings { get; set; }
 
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _ea;
-        private readonly IContainerExtension _container;
         private readonly IDialogService _dialogService;
-        private ObservableCollection<Models.CooldownModel> _listOfCooldowns;
+        private Models.CooldownListModel _cooldowns;
         private bool _isCooldownRunning;
         private bool _isWindowHudOptionChecked_Always = true;
         private bool _isWindowHudOptionChecked_Auto;
         private Models.CooldownModel SelectedCooldown;
 
 
-        public CooldownHUDSettingsViewModel(IRegionManager regionmanager, IEventAggregator ea, IContainerExtension container, IDialogService dialogService)
+        public CooldownHUDSettingsViewModel(IRegionManager regionmanager, IEventAggregator ea, IDialogService dialogService)
         {
             this._ea = ea;
             this._regionManager = regionmanager;
-            this._container = container;
             this._dialogService = dialogService;
-            this._listOfCooldowns = new ObservableCollection<Models.CooldownModel>();
+            this._cooldowns = new Models.CooldownListModel();
             this.NavigateCommand = new DelegateCommand<string>(Navigate);
             this.CooldownStart = new DelegateCommand(Start);
             this.CooldownStop = new DelegateCommand(Stop);
             this.AddCooldown = new DelegateCommand(AddNewCooldown);
             this.EditCooldown = new DelegateCommand(EditSelectedCooldown);
             this.DeleteCooldown = new DelegateCommand(DeleteSelectedCooldown);
+            this.LoadSettings = new DelegateCommand(LoadSettingsService);
+            this.SaveSettings = new DelegateCommand(SaveSettingsService);
+
+        }
+
+        private void LoadSettingsService()
+        {
+            this.Cooldowns.Load();
+        }
+        private void SaveSettingsService()
+        {
+            this.Cooldowns.Save();
         }
 
         public bool IsCooldownRunning
@@ -114,14 +128,14 @@ namespace MediviaLyzer.Tabs.ViewModels
         {
             _regionManager.RequestNavigate("PagesRegion", page);
         }
-        public ObservableCollection<Models.CooldownModel> ListOfCooldowns
+        public Models.CooldownListModel Cooldowns
         {
-            get { return _listOfCooldowns; }
+            get { return _cooldowns; }
             set
             {
-                if (value == _listOfCooldowns)
+                if (value == _cooldowns)
                     return;
-                _listOfCooldowns = value;
+                _cooldowns = value;
                 NotifyPropertyChanged();
             }
         }
@@ -130,7 +144,7 @@ namespace MediviaLyzer.Tabs.ViewModels
             if (model == null || model?.Id != -1)
                 return;
             model.Id = FindEmptyId();
-            ListOfCooldowns.Add(model);
+            Cooldowns.Cooldowns.Add(model);
         }
         private void FuncEditCooldown(Models.CooldownModel model)
         {
@@ -144,21 +158,21 @@ namespace MediviaLyzer.Tabs.ViewModels
             if (model == null)
                 return;
             model.Delete();
-            ListOfCooldowns.Remove(model);
+            Cooldowns.Cooldowns.Remove(model);
             _ea.GetEvent<Events.OnCooldownDelete>().Publish(model);
         }
         private int FindEmptyId()
         {
             for (int i = 64321; i < int.MaxValue; ++i)
             {
-                if (ListOfCooldowns.Where(x => x.Id == i).FirstOrDefault() == null)
+                if (Cooldowns.Cooldowns.Where(x => x.Id == i).FirstOrDefault() == null)
                     return i;
             }
             throw new Exception("Cannot find unused id (?)");
         }
         private void Start()
         {
-            foreach (var elem in ListOfCooldowns)
+            foreach (var elem in Cooldowns.Cooldowns)
             {
                 elem.Hotkeys = elem.HotkeyStr.ConvertToHotkeyModel();
                 _dialogService.Show("CooldownHUD", new DialogParameters
@@ -171,6 +185,10 @@ namespace MediviaLyzer.Tabs.ViewModels
         private void Stop()
         {
 
+        }
+        protected void NotifyPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 

@@ -12,8 +12,8 @@ namespace MediviaLyzer.Models
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private WindowStartupLocation _windowStartupLocation;
-        private double _windowPositionLeft;
-        private double _windowPositionRight;
+        private double _windowPositionLeft = -1;
+        private double _windowPositionTop = -1;
         private double _windowWidth;
         private double _windowHeight;
         public WindowStartupLocation WindowStartupLocation
@@ -27,19 +27,29 @@ namespace MediviaLyzer.Models
         }
         public double WindowPositionLeft
         {
-            get { return _windowPositionLeft; }
+            get
+            {
+                if (_windowPositionLeft == -1)
+                    return System.Windows.SystemParameters.PrimaryScreenWidth / 2;
+                return _windowPositionLeft; 
+            }
             set
             {
                 _windowPositionLeft = value;
                 NotifyPropertyChanged();
             }
         }
-        public double WindowPositionRight
+        public double WindowPositionTop
         {
-            get { return _windowPositionRight; }
+            get 
+            { 
+                if(_windowPositionTop == -1)
+                    return System.Windows.SystemParameters.PrimaryScreenHeight / 2;
+                return _windowPositionTop; 
+            }
             set
             {
-                _windowPositionRight = value;
+                _windowPositionTop = value;
                 NotifyPropertyChanged();
             }
         }
@@ -67,7 +77,7 @@ namespace MediviaLyzer.Models
         { 
             this.WindowStartupLocation = obj.WindowStartupLocation;
             this.WindowPositionLeft = obj.WindowPositionLeft;
-            this.WindowPositionRight = obj.WindowPositionRight;
+            this.WindowPositionTop = obj.WindowPositionTop;
             this.WindowWidth = obj.WindowWidth;
             this.WindowHeight = obj.WindowHeight;
         }

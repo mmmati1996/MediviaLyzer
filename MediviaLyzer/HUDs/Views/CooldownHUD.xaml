@@ -14,7 +14,7 @@
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="Topmost" Value="{Binding IsTopMost}"/>
-            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="Manual" />
             <Setter Property="ResizeMode" Value="NoResize"/>
             <Setter Property="ShowInTaskbar" Value="False"/>
             <Setter Property="SizeToContent" Value="WidthAndHeight"/>
@@ -25,6 +25,8 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Opacity" Value="{Binding WindowOpacity}"/>
             <Setter Property="Visibility" Value="{Binding Visibility, Mode=TwoWay}"/>
+            <Setter Property="Left" Value="{Binding Model.WindowPositionLeft, Mode=TwoWay}"/>
+            <Setter Property="Top" Value="{Binding Model.WindowPositionTop, Mode=TwoWay}"/>
         </Style>
     </prism:Dialog.WindowStyle>
     <Grid>

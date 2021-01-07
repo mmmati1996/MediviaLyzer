@@ -7,6 +7,7 @@ using Prism.Services.Dialogs;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -19,13 +20,13 @@ namespace MediviaLyzer.HUDs.ViewModels
 
         public Action Show { get; internal set; }
         public Action Hide { get; internal set; }
-        private DispatcherTimer Timer;
         private double _windowOpacity = 1;
         public readonly IEventAggregator _ea;
         public DelegateCommand ResetClock { get; set; }
         private Visibility _visibility = Visibility.Visible;
         private bool _isTopMost = true;
         public Func<bool> IsFocused { get; internal set; }
+        private bool IsHidden { get; set; }
         public CooldownModel _model;
         private double _progressCurrent = 0;
         private bool VisibleAlways { get; set; } = true;
@@ -39,10 +40,6 @@ namespace MediviaLyzer.HUDs.ViewModels
             _ea.GetEvent<Events.OnCooldownDelete>().Subscribe(OnCooldownDelete_Subscribe);
             _ea.GetEvent<Events.IsWindowVisible>().Subscribe(IsWindowVisible_Subscribe);
             _ea.GetEvent<Events.HotkeyFired>().Subscribe(OnHotkeyFires_Subscribe);
-            this.Timer = new DispatcherTimer();
-            this.Timer.Interval = TimeSpan.FromSeconds(0.1);
-            Timer.Tick += Timer_Tick;
-            Timer.Start();
         }
 
         public CooldownModel Model
@@ -108,8 +105,11 @@ namespace MediviaLyzer.HUDs.ViewModels
             if(this.Model.Hotkeys.Compare(obj))
             {
                 ProgressCurrent = 0;
-                if(!VisibleAlways)
+                if (!VisibleAlways)
+                {
+                    IsHidden = false;
                     Show();
+                }
             }
         }
         public bool IsTopMost
@@ -143,7 +143,7 @@ namespace MediviaLyzer.HUDs.ViewModels
         }
         private void IsWindowVisible_Subscribe(bool status)
         {
-            if (status != IsTopMost)
+            if (status != IsTopMost && !IsHidden)
             {
                 if (status == true)
                 {
@@ -173,14 +173,31 @@ namespace MediviaLyzer.HUDs.ViewModels
                 NotifyPropertyChanged();
             }
         }
-
+        private bool _isRunning = true;
         public string Title { get; set; } = "blbla";
 
-        private void Timer_Tick(object sender, EventArgs e)
+
+        private void StartTimer()
         {
-            ProgressCurrent += 0.1;
-            if (ProgressCurrent > Model?.Time && !VisibleAlways)
-                Hide();
+            if(Model != null)
+                ProgressCurrent = Model.Time;
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                while (_isRunning)
+                {
+                    ProgressCurrent += 0.1;
+                    if (ProgressCurrent > Model?.Time && !VisibleAlways)
+                    {
+                        IsHidden = true;
+                        Others.DispatcherService.Invoke(() =>
+                        {
+                            Hide();
+                        });
+                    }
+                    Thread.Sleep(100);
+                }
+            }).Start();
         }
         protected void NotifyPropertyChanged([CallerMemberName] string name = null)
         {
@@ -193,6 +210,7 @@ namespace MediviaLyzer.HUDs.ViewModels
         }
         public void Dispose()
         {
+            _isRunning = false;
             _ea.GetEvent<Events.IsWindowVisible>().Unsubscribe(IsWindowVisible_Subscribe);
             _ea.GetEvent<Events.OnCooldownUpdate>().Unsubscribe(OnCooldownUpdate_Subscribe);
             _ea.GetEvent<Events.OnCooldownDelete>().Unsubscribe(OnCooldownDelete_Subscribe);
@@ -218,6 +236,7 @@ namespace MediviaLyzer.HUDs.ViewModels
                 this.Model = new Models.CooldownModel();
             }
             this.VisibleAlways = parameters.GetValue<bool>("visibleAlways");
+            StartTimer();
         }
     }
 }
