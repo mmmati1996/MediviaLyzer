@@ -25,7 +25,8 @@ namespace MediviaLyzer.HUDs.Views
         private void MoveWindow(object sender, MouseButtonEventArgs e)
         {
             this.Visibility = Visibility.Visible;
-            this.DragMove();
+            if(e.LeftButton == MouseButtonState.Pressed)
+                this.DragMove();
         }
     }
 }

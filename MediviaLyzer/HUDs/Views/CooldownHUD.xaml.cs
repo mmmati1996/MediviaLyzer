@@ -33,7 +33,8 @@ namespace MediviaLyzer.HUDs.Views
 
         private void ProgressBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            ((DialogWindow)this.Parent).DragMove();
+            if (e.LeftButton == MouseButtonState.Pressed)
+                ((DialogWindow)this.Parent).DragMove();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
