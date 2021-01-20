@@ -30,6 +30,7 @@
             <Setter Property="Focusable" Value="{Binding IsLocked}"/>
             <Setter Property="ShowActivated" Value="{Binding IsLocked}"/>
             <Setter Property="IsEnabled" Value="{Binding IsLocked}"/>
+            <Setter Property="FocusManager.IsFocusScope" Value="{Binding IsLocked}"/>
         </Style>
     </prism:Dialog.WindowStyle>
     <Grid>

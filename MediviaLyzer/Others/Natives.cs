@@ -21,6 +21,12 @@ namespace MediviaLyzer.Others
         [DllImport("user32.dll")]
         public static extern int GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
 
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowLongPtr(IntPtr hWnd, int nIndex);
+
     }
     public enum HookType : int
     {

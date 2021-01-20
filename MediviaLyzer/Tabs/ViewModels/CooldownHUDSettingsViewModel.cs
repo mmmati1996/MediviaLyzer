@@ -189,7 +189,8 @@ namespace MediviaLyzer.Tabs.ViewModels
                 _dialogService.Show("CooldownHUD", new DialogParameters
                 {
                     { "cooldown", elem },
-                    { "visibleAlways", IsWindowHudOptionChecked_Always }
+                    { "visibleAlways", IsWindowHudOptionChecked_Always },
+                    { "locked", IsLockHudChecked }
                 }, r => { });
             }
         }

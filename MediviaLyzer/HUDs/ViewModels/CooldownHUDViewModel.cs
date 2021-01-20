@@ -20,6 +20,8 @@ namespace MediviaLyzer.HUDs.ViewModels
 
         public Action Show { get; internal set; }
         public Action Hide { get; internal set; }
+        public Action<bool> Lock { get; set; }
+
         private double _windowOpacity = 1;
         public readonly IEventAggregator _ea;
         public DelegateCommand ResetClock { get; set; }
@@ -136,6 +138,7 @@ namespace MediviaLyzer.HUDs.ViewModels
             set
             {
                 _isLocked = value;
+                Lock(value);
                 NotifyPropertyChanged();
             }
         }
@@ -254,6 +257,7 @@ namespace MediviaLyzer.HUDs.ViewModels
                 this.Model = new Models.CooldownModel();
             }
             this.VisibleAlways = parameters.GetValue<bool>("visibleAlways");
+            this.IsLocked = parameters.GetValue<bool>("locked");
             StartTimer();
         }
     }
