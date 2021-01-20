@@ -27,6 +27,9 @@
             <Setter Property="Visibility" Value="{Binding Visibility, Mode=TwoWay}"/>
             <Setter Property="Left" Value="{Binding Model.WindowPositionLeft, Mode=TwoWay}"/>
             <Setter Property="Top" Value="{Binding Model.WindowPositionTop, Mode=TwoWay}"/>
+            <Setter Property="Focusable" Value="{Binding IsLocked}"/>
+            <Setter Property="ShowActivated" Value="{Binding IsLocked}"/>
+            <Setter Property="IsEnabled" Value="{Binding IsLocked}"/>
         </Style>
     </prism:Dialog.WindowStyle>
     <Grid>
@@ -40,7 +43,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ProgressBar Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{Binding Model.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" BorderBrush="{Binding Model.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Foreground="{Binding Model.ForegroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Value="{Binding ProgressCurrent}" Maximum="{Binding Model.Time}" Minimum="0" Width="120" Height="10" Opacity="{Binding WindowOpacity}" MouseDown="ProgressBar_MouseDown"/>
+        <ProgressBar Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{Binding Model.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" BorderBrush="{Binding Model.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Foreground="{Binding Model.ForegroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Value="{Binding ProgressCurrent}" Maximum="{Binding Model.Time}" Minimum="0" Width="{Binding Model.BarWidth}" Height="{Binding Model.BarHeight}" Opacity="{Binding WindowOpacity}" MouseDown="ProgressBar_MouseDown"/>
         <Label Content="{Binding LabelText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="{Binding Model.GridRow, Mode=OneWay}" Grid.Column="{Binding Model.GridColumn, Mode=OneWay}" Visibility="{Binding Model.VisibilityText, Mode=OneWay}" FontSize="9" Opacity="{Binding WindowOpacity}" Foreground="{Binding Model.FontColor, Converter={StaticResource ColorToBrushConverter}}" FontStyle="Oblique"/>
     </Grid>
 </UserControl>

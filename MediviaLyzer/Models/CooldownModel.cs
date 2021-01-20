@@ -53,6 +53,8 @@ namespace MediviaLyzer.Models
         private int _gridColumn = 1;
         private string _hotkeyStr;
         private HotkeyModel _hotkeys;
+        private double _barWidth = -1;
+        private double _barHeight = -1;
         [XmlIgnore]
         private Visibility _visibilityText = Visibility.Collapsed;
 
@@ -217,6 +219,34 @@ namespace MediviaLyzer.Models
                         GridColumn = 2;
                         break;
                 }
+                NotifyPropertyChanged();
+            }
+        }
+        public double BarWidth
+        {
+            get 
+            {
+                if (_barWidth == -1)
+                    return 120;
+               return _barWidth; 
+            }
+            set
+            {
+                this._barWidth = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public double BarHeight
+        {
+            get 
+            {
+                if (_barHeight == -1)
+                    return 10;
+                return _barHeight; 
+            }
+            set
+            {
+                this._barHeight = value;
                 NotifyPropertyChanged();
             }
         }

@@ -37,6 +37,7 @@ namespace MediviaLyzer.Tabs.ViewModels
         private bool _isCooldownRunning;
         private bool _isWindowHudOptionChecked_Always = true;
         private bool _isWindowHudOptionChecked_Auto;
+        private bool _isLockHudChecked = false;
         private Models.CooldownModel SelectedCooldown;
 
 
@@ -74,6 +75,16 @@ namespace MediviaLyzer.Tabs.ViewModels
                 _isCooldownRunning = value;
                 NotifyPropertyChanged();
                 _ea.GetEvent<Events.IsCooldownEnabled>().Publish(_isCooldownRunning);
+            }
+        }
+        public bool IsLockHudChecked
+        {
+            get { return _isLockHudChecked; }
+            set
+            {
+                _isLockHudChecked = value;
+                NotifyPropertyChanged();
+                _ea.GetEvent<Events.CooldownLock>().Publish(_isLockHudChecked);
             }
         }
         public bool IsWindowHudOptionChecked_Always

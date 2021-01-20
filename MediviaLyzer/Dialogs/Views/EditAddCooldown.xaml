@@ -10,9 +10,8 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
              xmlns:prism="http://prismlibrary.com/" xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="500"
-             Width="500" Height="400" MinWidth="500" MinHeight="400">
+             mc:Ignorable="d"
+             Width="500" Height="450" MinWidth="500" MinHeight="450">
     <UserControl.Resources>
         <exten:ColorToBrushConverter x:Key="ColorToBrushConverter" />
     </UserControl.Resources>
@@ -24,6 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
+            <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="45"/>
@@ -56,7 +56,7 @@
                 </ie:EventTrigger>
             </ie:Interaction.Triggers>
         </Button>
-        <Rectangle Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" Fill="{Binding SelectedCooldown.ForegroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+        <Rectangle Grid.Row="4" Grid.Column="2" Margin="5,5,5,5" Fill="{Binding SelectedCooldown.ForegroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Stroke="Black"/>
         <Label Grid.Row="5" Grid.Column="0" Content="Background color" VerticalAlignment="Center" FontSize="15"/>
         <Button Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1" Content="Pick color" Margin="5,5,5,5">
             <ie:Interaction.Triggers>
@@ -65,31 +65,42 @@
                 </ie:EventTrigger>
             </ie:Interaction.Triggers>
         </Button>
-        <Rectangle Grid.Row="5" Grid.Column="2" Margin="5,5,5,5" Fill="{Binding SelectedCooldown.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
-        <Label Grid.Row="6" Grid.Column="0" Content="Name alignment" VerticalAlignment="Center" FontSize="15"/>
-        <ComboBox Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" ItemsSource="{Binding Source={exten:EnumBindingSource {x:Type models:TextAlignmentTypes}}}" SelectedItem="{Binding SelectedCooldown.TextAlignment}"/>
-        <Label Grid.Row="7" Grid.Column="0" Content="Font color" VerticalAlignment="Center" FontSize="15"/>
-        <Button Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="1" Content="Pick color" Margin="5,5,5,5">
+        <Rectangle Grid.Row="5" Grid.Column="2" Margin="5,5,5,5" Fill="{Binding SelectedCooldown.BackgroundColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Stroke="Black"/>
+        <Label Grid.Row="6" Grid.Column="0" Content="Width" VerticalAlignment="Center" FontSize="15"/>
+        <Grid Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" VerticalAlignment="Center" Text="{Binding SelectedCooldown.BarWidth}"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Height" VerticalAlignment="Center" FontSize="15"/>
+            <TextBox Grid.Row="0" Grid.Column="2" Margin="5,5,5,5" VerticalAlignment="Center" Text="{Binding SelectedCooldown.BarHeight}"/>
+        </Grid>
+        <Label Grid.Row="7" Grid.Column="0" Content="Name alignment" VerticalAlignment="Center" FontSize="15"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Center" ItemsSource="{Binding Source={exten:EnumBindingSource {x:Type models:TextAlignmentTypes}}}" SelectedItem="{Binding SelectedCooldown.TextAlignment}"/>
+        <Label Grid.Row="8" Grid.Column="0" Content="Font color" VerticalAlignment="Center" FontSize="15"/>
+        <Button Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="1" Content="Pick color" Margin="5,5,5,5">
             <ie:Interaction.Triggers>
                 <ie:EventTrigger EventName="Click">
                     <ie:InvokeCommandAction Command="{Binding PickColorCommand}" CommandParameter="FontColor"/>
                 </ie:EventTrigger>
             </ie:Interaction.Triggers>
         </Button>
-        <Rectangle Grid.Row="7" Grid.Column="2" Margin="5,5,5,5" Fill="{Binding SelectedCooldown.FontColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
-        <Grid Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,5,5,5">
+        <Rectangle Grid.Row="8" Grid.Column="2" Margin="5,5,5,5" Fill="{Binding SelectedCooldown.FontColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" Stroke="Black"/>
+        <Grid Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Confirm" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Grid.Column="1" Content="Confirm" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="Click">
                         <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}" CommandParameter="true"/>
                     </ie:EventTrigger>
                 </ie:Interaction.Triggers>
             </Button>
-            <Button Grid.Column="1" Content="Cancel" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Grid.Column="0" Content="Cancel" Margin="5,5,5,5" VerticalAlignment="Center" HorizontalAlignment="Stretch">
                 <ie:Interaction.Triggers>
                     <ie:EventTrigger EventName="Click">
                         <ie:InvokeCommandAction Command="{Binding CloseDialogCommand}" CommandParameter="false"/>

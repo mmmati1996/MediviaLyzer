@@ -25,6 +25,7 @@ namespace MediviaLyzer.HUDs.ViewModels
         public DelegateCommand ResetClock { get; set; }
         private Visibility _visibility = Visibility.Visible;
         private bool _isTopMost = true;
+        private bool _isLocked = false;
         public Func<bool> IsFocused { get; internal set; }
         private bool IsHidden { get; set; }
         public CooldownModel _model;
@@ -40,6 +41,12 @@ namespace MediviaLyzer.HUDs.ViewModels
             _ea.GetEvent<Events.OnCooldownDelete>().Subscribe(OnCooldownDelete_Subscribe);
             _ea.GetEvent<Events.IsWindowVisible>().Subscribe(IsWindowVisible_Subscribe);
             _ea.GetEvent<Events.HotkeyFired>().Subscribe(OnHotkeyFires_Subscribe);
+            _ea.GetEvent<Events.CooldownLock>().Subscribe(OnLockChanged_Subscribe);
+        }
+
+        private void OnLockChanged_Subscribe(bool obj)
+        {
+            IsLocked = obj;
         }
 
         public CooldownModel Model
@@ -65,6 +72,8 @@ namespace MediviaLyzer.HUDs.ViewModels
                 NotifyPropertyChanged("ForegroundColor");
                 NotifyPropertyChanged("BackgroundColor");
                 NotifyPropertyChanged("Time");
+                NotifyPropertyChanged("BarWidth");
+                NotifyPropertyChanged("BarHeight");
             }
         }
         public double ProgressCurrent
@@ -118,6 +127,15 @@ namespace MediviaLyzer.HUDs.ViewModels
             set
             {
                 _isTopMost = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsLocked
+        {
+            get { return !_isLocked; }
+            set
+            {
+                _isLocked = value;
                 NotifyPropertyChanged();
             }
         }

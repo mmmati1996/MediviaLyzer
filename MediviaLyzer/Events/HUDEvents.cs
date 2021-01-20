@@ -10,4 +10,5 @@ namespace MediviaLyzer.Events
     public class OnCooldownUpdate : PubSubEvent<Models.CooldownModel> { }
     public class OnCooldownDelete : PubSubEvent<Models.CooldownModel> { }
     public class HotkeyFired : PubSubEvent<Models.HotkeyModel> { }
+    public class CooldownLock : PubSubEvent<bool> { }
 }

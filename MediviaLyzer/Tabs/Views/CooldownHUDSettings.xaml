@@ -43,6 +43,7 @@
             <Grid>
                 <RadioButton Content="Always display" VerticalAlignment="Top" Margin="5,5,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_Always}"/>
                 <RadioButton Content="Auto show/hide" VerticalAlignment="Top" Margin="5,30,0,0" GroupName="WindowMode" IsChecked="{Binding IsWindowHudOptionChecked_Auto}"/>
+                <CheckBox Content="Disable HUD focus" VerticalAlignment="Top" Margin="5,60,0,0" IsChecked="{Binding IsLockHudChecked}"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Header="Settings">
